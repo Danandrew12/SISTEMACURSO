@@ -1,0 +1,84 @@
+<table id="tabla_usuario" class="display responsive nowrap" style="width:100%">
+<thead>
+	<tr>
+		<th>#</th>
+		<th>Usuario</th>
+		<th>Rol</th>
+		<th>Sexo</th>
+		<th>Estatus</th>
+		<th>Acci&oacute;n</th>
+	</tr>
+</thead>
+<tfoot>
+	<tr>
+		<th>#</th>
+		<th>Usuario</th>
+		<th>Rol</th>
+		<th>Sexo</th>
+		<th>Estatus</th>
+		<th>Acci&oacute;n</th>
+	</tr>
+</tfoot>
+</table>
+//////////////////////////////////////*
+
+function listar_usuario(){
+     table = $("#tabla_usuario").DataTable({
+        "ordering":false,
+        "paging": false,
+        "searching": { "regex": true },
+        "lengthMenu": [ [10, 25, 50, 100, -1], [10, 25, 50, 100, "All"] ],
+        "pageLength": 100,
+        "destroy":true,
+        "async": false ,
+        "processing": true,
+        "ajax":{
+            "url":"../controlador/usuario/controlador_usuario_listar.php",
+            type:'POST'
+        },
+        "columns":[
+            {"data":"posicion"},
+			{"data":"persona"},
+			{"data":"usu_user"},
+			{"data":"usu_tipo"},
+			{"data":"usu_sexo"},
+            {"data":"usu_estatus",
+            render: function (data, type, row ) {
+                if(data=='ACTIVO'){
+                    return "<span class='label label-success'>"+data+"</span>";                   
+                }else{
+                  return "<span class='label label-danger'>"+data+"</span>";                 
+                }
+              }
+            },  
+            {"defaultContent":"<button style='font-size:13px;' type='button' class='editar btn btn-primary'>"}
+        ],
+
+        "language":idioma_espanol,
+        select: true
+    });
+
+}
+
+////////////////////////////////////////////////////////////
+		echo '{
+		    "sEcho": 1,
+		    "iTotalRecords": "0",
+		    "iTotalDisplayRecords": "0",
+		    "aaData": []
+		}';
+
+
+///////////////////////////////////////////////////////////
+    $('input.global_filter').on( 'keyup click', function () {
+        filterGlobal();
+    } );
+    $('input.column_filter').on( 'keyup click', function () {
+        filterColumn( $(this).parents('tr').attr('data-column') );
+    });
+
+function filterGlobal() {
+    $('#tabla_usuario').DataTable().search(
+        $('#global_filter').val(),
+    ).draw();
+}
