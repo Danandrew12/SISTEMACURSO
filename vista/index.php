@@ -422,6 +422,20 @@ folder instead of downloading all of them to reduce the load. -->
     }
   }
 
+  function dashboard(){
+    $.ajax({
+        "url":"../contolador/usuario/controlador_dashboard.php",
+        type:'POST'
+    }).done(function(resp){
+      alert(resp);
+        var data = JSON.parse(resp);
+        if(data.length>0){
+          document.getElementById('#lbl_paciente').innerHTML=data[0];
+
+        }
+    })
+}
+
 
 </script>
 <!-- Bootstrap 3.3.7 -->
