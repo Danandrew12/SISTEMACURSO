@@ -95,7 +95,7 @@ function filterGlobal() {
 
 function listar_paciente_combo(){
     $.ajax({
-        "url":"../contolador/cita/controlador_combo_paciente_listar.php",
+        url:'../contolador/cita/controlador_combo_paciente_listar.php',
         type:'POST'
     }).done(function(resp){
         var data = JSON.parse(resp);
@@ -116,7 +116,7 @@ function listar_paciente_combo(){
 
 function listar_especialidad_combo(){
     $.ajax({
-        "url":"../contolador/cita/controlador_combo_especialidad_listar.php",
+        url:'../contolador/cita/controlador_combo_especialidad_listar.php',
         type:'POST'
     }).done(function(resp){
         var data = JSON.parse(resp);
@@ -139,7 +139,7 @@ function listar_especialidad_combo(){
 
 function listar_doctor_combo(id){
     $.ajax({
-        "url":"../contolador/cita/controlador_combo_doctor_listar.php",
+        url:'../contolador/cita/controlador_combo_doctor_listar.php',
         type:'POST',
 		data:{
 			id:id
@@ -173,7 +173,7 @@ function Registrar_Cita(){
 	}
 
 	$.ajax({
-		"url":"../contolador/cita/controlador_cita_registro.php",
+		url:'../contolador/cita/controlador_cita_registro.php',
 		type:'POST',
 		data:{
 			idpa:idpaciente,
@@ -209,7 +209,7 @@ function Registrar_Cita(){
 
 function listar_paciente_combo_editar(){
     $.ajax({
-        "url":"../contolador/cita/controlador_combo_paciente_listar.php",
+        url:'../contolador/cita/controlador_combo_paciente_listar.php',
         type:'POST'
     }).done(function(resp){
         var data = JSON.parse(resp);
@@ -230,7 +230,7 @@ function listar_paciente_combo_editar(){
 
 function listar_especialidad_combo_editar(){
     $.ajax({
-        "url":"../contolador/cita/controlador_combo_especialidad_listar.php",
+        url:'../contolador/cita/controlador_combo_especialidad_listar.php',
         type:'POST'
     }).done(function(resp){
         var data = JSON.parse(resp);
@@ -253,7 +253,7 @@ function listar_especialidad_combo_editar(){
 
 function listar_doctor_combo_editar(id,idmedico){
     $.ajax({
-        "url":"../contolador/cita/controlador_combo_doctor_listar.php",
+        url:'../contolador/cita/controlador_combo_doctor_listar.php',
         type:'POST',
         data:{
             id:id
@@ -291,7 +291,7 @@ function Editar_Cita(){
     }
 
     $.ajax({
-        "url":"../contolador/cita/controlador_cita_editar.php",
+        url:'../contolador/cita/controlador_cita_editar.php',
         type:'POST',
         data:{
             idcita:idcita,

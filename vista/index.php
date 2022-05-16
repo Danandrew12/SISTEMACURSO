@@ -157,12 +157,11 @@ folder instead of downloading all of them to reduce the load. -->
  
         ?>
               <!--ususario-->
-              <a onclick="cargar_contenido('contenido_principal','dashboard/vista_dashboard_listar.php')">
-            <i class="fa fa-user"></i> <span>Inicio</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+        <header style="text-align:center">
+          <a href="dashboard/vista_dashboard_listar.php" class="logo">
+            <i class="fa fa-user"></i> <span class="logo-lg">INICIO</span>
           </a>
+          </header>
           <a onclick="cargar_contenido('contenido_principal','paciente/vista_paciente_listar.php')">
             <i class="fa fa-user"></i> <span>Paciente</span>
             <span class="pull-right-container">
@@ -302,9 +301,11 @@ folder instead of downloading all of them to reduce the load. -->
               <div class="container-fluid">
                 <div class="row">
                   <div class="col-lg-3 col-6">
-                    <div class="small-box bg-success">
+                  </div>
+                  <div class="col-lg-3 col-3">
+                    <div class="small-box bg-primary">
                       <div class="inner">
-                        <h3 >0<sup style="font-size: 20px"></sup></h3>
+                        <h3 id="lbl_pacientes" >0<sup style="font-size: 20px"></sup></h3>
                         <p>Pacientes</p>
                       </div>
                       <div class="icon">
@@ -312,10 +313,10 @@ folder instead of downloading all of them to reduce the load. -->
                       </div>
                     </div>
                   </div>
-                  <div class="col-lg-3 col-6">
-                    <div class="small-box bg-success">
+                  <div class="col-lg-3 col-3">
+                    <div class="small-box bg-primary">
                       <div class="inner">
-                        <h3>0<sup style="font-size: 20px"></sup></h3>
+                        <h3 id="lbl_medico" >0<sup style="font-size: 20px"></sup></h3>
                         <p>Medico</p>
                       </div>
                       <div class="icon">
@@ -429,15 +430,12 @@ folder instead of downloading all of them to reduce the load. -->
 
   function dashboard(){
     $.ajax({
-        "url":"../contolador/usuario/controlador_dashboard.php",
+        url:'../contolador/usuario/controlador_dashboard.php',
         type:'POST'
     }).done(function(resp){
-      alert(resp);
         var data = JSON.parse(resp);
-        if(data.length>0){
-          document.getElementById('#lbl_paciente').innerHTML=data[0];
-
-        }
+          document.getElementById('lbl_pacientes').innerHTML=data[0][0];
+          document.getElementById('lbl_medico').innerHTML=data[0][1];
     })
 }
 
@@ -476,6 +474,7 @@ folder instead of downloading all of them to reduce the load. -->
 <script src="../js/usuario.js"></script>
 <script>
 TraerDatosUsuario();
+dashboard();
 </script>
 </body>
 </html>

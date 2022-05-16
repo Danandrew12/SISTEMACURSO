@@ -472,4 +472,3 @@ function Restablecer_Contra(){
 		}
 	})
 }
-

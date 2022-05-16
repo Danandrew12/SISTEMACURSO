@@ -11,10 +11,8 @@
  Target Server Version : 100424
  File Encoding         : 65001
 
- Date: 16/05/2022 11:21:59
+ Date: 16/05/2022 15:57:04
 */
-CREATE DATABASE bd_curso;
-USER bd_curso
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
@@ -57,11 +55,14 @@ CREATE TABLE `cita`  (
   CONSTRAINT `cita_ibfk_2` FOREIGN KEY (`medico_id`) REFERENCES `medico` (`medico_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `cita_ibfk_3` FOREIGN KEY (`especialidad_id`) REFERENCES `especialidad` (`especialidad_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `cita_ibfk_4` FOREIGN KEY (`usu_id`) REFERENCES `usuario` (`usu_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cita
 -- ----------------------------
+INSERT INTO `cita` VALUES (1, 1, '2022-05-16', 2, 2, 3, 'PENDIENTE', 'vino por malestar', 5);
+INSERT INTO `cita` VALUES (2, 2, '2022-05-16', 2, NULL, 3, 'PENDIENTE', 'cxcxcvxc', 5);
+INSERT INTO `cita` VALUES (3, 3, '2022-05-16', 2, NULL, 3, 'PENDIENTE', 'wewerwe', 5);
 
 -- ----------------------------
 -- Table structure for consulta
@@ -208,11 +209,14 @@ CREATE TABLE `historia`  (
   PRIMARY KEY (`historia_id`) USING BTREE,
   INDEX `paciente_id`(`paciente_id`) USING BTREE,
   CONSTRAINT `historia_ibfk_1` FOREIGN KEY (`paciente_id`) REFERENCES `paciente` (`paciente_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of historia
 -- ----------------------------
+INSERT INTO `historia` VALUES (1, 3, '2022-05-16 00:00:00.000000');
+INSERT INTO `historia` VALUES (2, 1, '2022-05-16 00:00:00.000000');
+INSERT INTO `historia` VALUES (3, 2, '2022-05-16 00:00:00.000000');
 
 -- ----------------------------
 -- Table structure for insumo
@@ -281,16 +285,19 @@ CREATE TABLE `medico`  (
   `medico_colegiatura` char(12) CHARACTER SET utf8 COLLATE utf8_spanish_ci NULL DEFAULT NULL,
   `especialidad_id` int NOT NULL,
   `usu_id` int NOT NULL,
+  `sag_id` int NOT NULL,
   PRIMARY KEY (`medico_id`) USING BTREE,
   INDEX `usu_id`(`usu_id`) USING BTREE,
   INDEX `FK_especialidad`(`especialidad_id`) USING BTREE,
+  INDEX `sag_id`(`sag_id`) USING BTREE,
   CONSTRAINT `medico_ibfk_1` FOREIGN KEY (`especialidad_id`) REFERENCES `especialidad` (`especialidad_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `medico_ibfk_2` FOREIGN KEY (`usu_id`) REFERENCES `usuario` (`usu_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of medico
 -- ----------------------------
+INSERT INTO `medico` VALUES (1, 'Betania', 'Guerrero', 'Contreras', 'las flores', '00427703757', 'F', '2000-11-29', '27390450', '11111', 2, 43, 0);
 
 -- ----------------------------
 -- Table structure for paciente
@@ -307,12 +314,16 @@ CREATE TABLE `paciente`  (
   `paciente_fenac` datetime(6) NULL DEFAULT NULL,
   `paciente_nrodocumento` char(12) CHARACTER SET utf8 COLLATE utf8_spanish_ci NULL DEFAULT NULL,
   `paciente_estatus` enum('ACTIVO','INACTIVO') CHARACTER SET utf8 COLLATE utf8_spanish_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`paciente_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = Dynamic;
+  `sag_id` int NOT NULL,
+  PRIMARY KEY (`paciente_id`) USING BTREE,
+  INDEX `sag_id`(`sag_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of paciente
 -- ----------------------------
+INSERT INTO `paciente` VALUES (1, 'Andrew', 'Contreras', 'Valero', 'las flores', '04162204090', 'M', NULL, '26309450', 'ACTIVO', 0);
+INSERT INTO `paciente` VALUES (2, 'Nestor', 'Guerrero', 'Contreras', 'las flores', '04246338650', 'M', NULL, '10749525', 'ACTIVO', 0);
 
 -- ----------------------------
 -- Table structure for procedimiento
@@ -401,7 +412,7 @@ CREATE TABLE `usuario`  (
   PRIMARY KEY (`usu_id`) USING BTREE,
   INDEX `rol_id`(`rol_id`) USING BTREE,
   CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`rol_id`) REFERENCES `rol` (`rol_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 41 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 44 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of usuario
@@ -420,6 +431,9 @@ INSERT INTO `usuario` VALUES (37, 'nestor', '$2y$10$cNb25Qz/yzBdy0kv9o3qJOOI/rnN
 INSERT INTO `usuario` VALUES (38, 'cris', '$2y$10$9xgvLuaCl.lYTYLIcdBQhOjfu1jTX2mTDTdJx7WJtLeqcaStePemm', 'M', 2, 'ACTIVO', 'betania@guerrero2010.com', 0);
 INSERT INTO `usuario` VALUES (39, 'dan', '$2y$10$29CX3Ja6C6ckGpO4mO90OuvM9b1TsfTfsApAzAz8l8EWuhFp9jgN6', 'M', 3, 'ACTIVO', 'betania@guerrero2010.com', 0);
 INSERT INTO `usuario` VALUES (40, 'betania23', '$2y$10$ZUdAoomjy5WSQHveHsHbb.kJV7/JWwlgj37bg.WkKfGL847H041Qm', 'M', 3, 'ACTIVO', 'betania@guerrero2010.com', 0);
+INSERT INTO `usuario` VALUES (41, 'andrewM', '$2y$10$8s7KBKDq4/QkZpeXMa8w/ekdG65ZcoHh4wBkUB8.nu0lvjJMbmZl6', 'M', 3, 'ACTIVO', 'pruebamail034@gmail.com', 0);
+INSERT INTO `usuario` VALUES (42, 'danielM', '$2y$10$N2zsVXY160F5qbY7tYzxNuw73zppWmY0t4veFz5eu1fWhhLw31ssO', 'M', 3, 'ACTIVO', 'daniel.valeros2012@gmail.com', 0);
+INSERT INTO `usuario` VALUES (43, 'betaniaM', '$2y$10$WFzPmkRxhhcLaD.xZtQq6.v1Gzzn3LOu3Ikt5H2od3WCLzehG4MHC', 'F', 3, 'ACTIVO', 'betania.guerrero@2010.com', 0);
 
 -- ----------------------------
 -- Procedure structure for SP_DASHBOARD
@@ -428,7 +442,9 @@ DROP PROCEDURE IF EXISTS `SP_DASHBOARD`;
 delimiter ;;
 CREATE PROCEDURE `SP_DASHBOARD`()
 SELECT
-	COUNT(*) as paciente
+	COUNT(*) as paciente,
+	(SELECT COUNT(*) FROM
+	medico) as medico
 FROM
 	paciente
 ;;
