@@ -297,17 +297,30 @@ folder instead of downloading all of them to reduce the load. -->
             
             <!-- /.box-body -->
           </div>
-          <div class="col-12 col-sm-6 col-md-3">
-              <div class="info-box">
-                <span class="info-box-icon bg-info elvation-1"><i class="fas fa-cog"></i></span>
-                <div class="info-box-content">
-                  <span class="info-box-text" id="lbl_paciente"><b>pacientes</b></span>
-                  <span class="info-box-number">
-                    <b>0</b>
-                  </span>
+          <div class="row">
+            <div class="col-lg-3 col-6">
+              <div class="small-box bg-success">
+                <div class="inner">
+                  <h3>0</h3>
+                  <p>Pacientes</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-stats-bars"></i>
                 </div>
               </div>
             </div>
+            <div class="col-lg-3 col-6">
+              <div class="small-box bg-success">
+                <div class="inner">
+                  <h3>0</h3>
+                  <p>Medico</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-stats-bars"></i>
+                </div>
+              </div>
+            </div>
+          </div>
           <!-- /.box -->
         </div>
       </div>
