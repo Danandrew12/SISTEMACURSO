@@ -276,55 +276,60 @@ folder instead of downloading all of them to reduce the load. -->
     <!-- Content Header (Page header) -->
 
     <!-- Main content -->
-    <section class="content">
-      <input type="text" id="txtidprincipal" value="<?php echo $_SESSION['S_IDUSUARIO'] ?>" hidden>
-      <input type="text" id="usuarioprincipal" value="<?php echo $_SESSION['S_USER'] ?>" hidden>
-      <div class="row" id="contenido_principal">
-        <div class="col-md-12">
-          <div class="box box-warning box-solid">
-            <div class="box-header with-border">
-              <h3 class="box-title">BIENVENIDO AL CONTENIDO PRINCIPAL</h3>
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
+    <div class="content">
+      <div class="row">
+          <input type="text" id="txtidprincipal" value="<?php echo $_SESSION['S_IDUSUARIO'] ?>" hidden>
+          <input type="text" id="usuarioprincipal" value="<?php echo $_SESSION['S_USER'] ?>" hidden>
+        <div class="row" id="contenido_principal">
+          <div class="col-md-12">
+            <div class="box box-warning box-solid">
+              <div class="box-header with-border">
+                <h3 class="box-title">BIENVENIDO AL CONTENIDO PRINCIPAL</h3>
+                <div class="box-tools pull-right">
+                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                  </button>
+                </div>
+                <!-- /.box-tools -->
               </div>
-              <!-- /.box-tools -->
+              <!-- /.box-header -->
+              <div class="box-body">
+                CONTENIDO PRINCIPAL
+              </div>
+              
+              <!-- /.box-body -->
             </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-              CONTENIDO PRINCIPAL
+            <div class="content">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-lg-3 col-6">
+                    <div class="small-box bg-success">
+                      <div class="inner">
+                        <h3 >0<sup style="font-size: 20px"></sup></h3>
+                        <p>Pacientes</p>
+                      </div>
+                      <div class="icon">
+                        <i class="ion ion-stats-bars"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-6">
+                    <div class="small-box bg-success">
+                      <div class="inner">
+                        <h3>0<sup style="font-size: 20px"></sup></h3>
+                        <p>Medico</p>
+                      </div>
+                      <div class="icon">
+                        <i class="ion ion-stats-bars"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            
-            <!-- /.box-body -->
           </div>
-          <div class="row">
-            <div class="col-lg-3 col-6">
-              <div class="small-box bg-success">
-                <div class="inner">
-                  <h3>0</h3>
-                  <p>Pacientes</p>
-                </div>
-                <div class="icon">
-                  <i class="ion ion-stats-bars"></i>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-3 col-6">
-              <div class="small-box bg-success">
-                <div class="inner">
-                  <h3>0</h3>
-                  <p>Medico</p>
-                </div>
-                <div class="icon">
-                  <i class="ion ion-stats-bars"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- /.box -->
         </div>
       </div>
-    </section>
+    </div>
   </div>
 </div>
 
