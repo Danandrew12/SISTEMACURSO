@@ -21,7 +21,7 @@
                     <div class="col-lg-4">
                       <label for="">Fecha Fin</label>
                       <input type="date" id="txt_fechafin" class="form-control">
-                    </div><br>
+                    </div>
                    <div class="col-lg-2">
                       <label for="">&nbsp;</label><br>
                       <button class="btn btn-success" style="width:100%" onclick="listar_consulta()"><i class="glyphicon glyphicon-search"></i>Buscar</button>
