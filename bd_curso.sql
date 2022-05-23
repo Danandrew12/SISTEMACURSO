@@ -11,7 +11,7 @@
  Target Server Version : 100424
  File Encoding         : 65001
 
- Date: 16/05/2022 15:57:04
+ Date: 22/05/2022 09:38:34
 */
 
 SET NAMES utf8mb4;
@@ -26,7 +26,7 @@ CREATE TABLE `auditoria`  (
   `rol_id` int NULL DEFAULT NULL,
   `usu_id` int NULL DEFAULT NULL,
   PRIMARY KEY (`audi_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of auditoria
@@ -55,7 +55,7 @@ CREATE TABLE `cita`  (
   CONSTRAINT `cita_ibfk_2` FOREIGN KEY (`medico_id`) REFERENCES `medico` (`medico_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `cita_ibfk_3` FOREIGN KEY (`especialidad_id`) REFERENCES `especialidad` (`especialidad_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `cita_ibfk_4` FOREIGN KEY (`usu_id`) REFERENCES `usuario` (`usu_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of cita
@@ -78,7 +78,7 @@ CREATE TABLE `consulta`  (
   PRIMARY KEY (`consulta_id`) USING BTREE,
   INDEX `cita_id`(`cita_id`) USING BTREE,
   CONSTRAINT `consulta_ibfk_1` FOREIGN KEY (`cita_id`) REFERENCES `cita` (`cita_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of consulta
@@ -98,7 +98,7 @@ CREATE TABLE `detalle_insumo`  (
   INDEX `insumo_id`(`insumo_id`) USING BTREE,
   CONSTRAINT `detalle_insumo_ibfk_1` FOREIGN KEY (`fua_id`) REFERENCES `fua` (`fua_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `detalle_insumo_ibfk_2` FOREIGN KEY (`insumo_id`) REFERENCES `insumo` (`insumo_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of detalle_insumo
@@ -118,7 +118,7 @@ CREATE TABLE `detalle_medicamento`  (
   INDEX `fua_id`(`fua_id`) USING BTREE,
   CONSTRAINT `detalle_medicamento_ibfk_1` FOREIGN KEY (`fua_id`) REFERENCES `fua` (`fua_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `detalle_medicamento_ibfk_2` FOREIGN KEY (`medicamento_id`) REFERENCES `medicamento` (`medicamento_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of detalle_medicamento
@@ -137,7 +137,7 @@ CREATE TABLE `detalle_procedimiento`  (
   INDEX `procedimiento_id`(`procedimiento_id`) USING BTREE,
   CONSTRAINT `detalle_procedimiento_ibfk_1` FOREIGN KEY (`procedimiento_id`) REFERENCES `procedimiento` (`procedimiento_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `detalle_procedimiento_ibfk_2` FOREIGN KEY (`fua_id`) REFERENCES `fua` (`fua_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of detalle_procedimiento
@@ -150,8 +150,10 @@ DROP TABLE IF EXISTS `donaciones`;
 CREATE TABLE `donaciones`  (
   `dona_id` int NOT NULL AUTO_INCREMENT,
   `paciente_id` int NULL DEFAULT NULL,
-  PRIMARY KEY (`dona_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = Dynamic;
+  PRIMARY KEY (`dona_id`) USING BTREE,
+  INDEX `paciente_id`(`paciente_id`) USING BTREE,
+  CONSTRAINT `donaciones_ibfk_1` FOREIGN KEY (`paciente_id`) REFERENCES `paciente` (`paciente_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of donaciones
@@ -167,7 +169,7 @@ CREATE TABLE `especialidad`  (
   `especialidad_fregistro` date NULL DEFAULT NULL,
   `especialidad_estatus` enum('ACTIVO','INACTIVO') CHARACTER SET utf8 COLLATE utf8_spanish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`especialidad_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of especialidad
@@ -192,7 +194,7 @@ CREATE TABLE `fua`  (
   INDEX `consulta_id`(`consulta_id`) USING BTREE,
   CONSTRAINT `fua_ibfk_1` FOREIGN KEY (`historia_id`) REFERENCES `historia` (`historia_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `fua_ibfk_2` FOREIGN KEY (`consulta_id`) REFERENCES `consulta` (`consulta_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of fua
@@ -209,7 +211,7 @@ CREATE TABLE `historia`  (
   PRIMARY KEY (`historia_id`) USING BTREE,
   INDEX `paciente_id`(`paciente_id`) USING BTREE,
   CONSTRAINT `historia_ibfk_1` FOREIGN KEY (`paciente_id`) REFERENCES `paciente` (`paciente_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of historia
@@ -229,7 +231,7 @@ CREATE TABLE `insumo`  (
   `insumo_fregistro` date NULL DEFAULT NULL,
   `insumo_estatus` enum('ACTIVO','INACTIVO','AGOTADO') CHARACTER SET utf8 COLLATE utf8_spanish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`insumo_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of insumo
@@ -256,7 +258,7 @@ CREATE TABLE `medicamento`  (
   `medicamento_fregistro` date NULL DEFAULT NULL,
   `medicamento_estatus` enum('ACTIVO','INACTIVO','AGOTADO') CHARACTER SET utf8 COLLATE utf8_spanish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`medicamento_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of medicamento
@@ -289,10 +291,9 @@ CREATE TABLE `medico`  (
   PRIMARY KEY (`medico_id`) USING BTREE,
   INDEX `usu_id`(`usu_id`) USING BTREE,
   INDEX `FK_especialidad`(`especialidad_id`) USING BTREE,
-  INDEX `sag_id`(`sag_id`) USING BTREE,
   CONSTRAINT `medico_ibfk_1` FOREIGN KEY (`especialidad_id`) REFERENCES `especialidad` (`especialidad_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `medico_ibfk_2` FOREIGN KEY (`usu_id`) REFERENCES `usuario` (`usu_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of medico
@@ -315,9 +316,8 @@ CREATE TABLE `paciente`  (
   `paciente_nrodocumento` char(12) CHARACTER SET utf8 COLLATE utf8_spanish_ci NULL DEFAULT NULL,
   `paciente_estatus` enum('ACTIVO','INACTIVO') CHARACTER SET utf8 COLLATE utf8_spanish_ci NULL DEFAULT NULL,
   `sag_id` int NOT NULL,
-  PRIMARY KEY (`paciente_id`) USING BTREE,
-  INDEX `sag_id`(`sag_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = Dynamic;
+  PRIMARY KEY (`paciente_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of paciente
@@ -335,7 +335,7 @@ CREATE TABLE `procedimiento`  (
   `procedimiento_fecregistro` date NULL DEFAULT NULL,
   `procedimiento_estatus` enum('ACTIVO','INACTIVO') CHARACTER SET utf8 COLLATE utf8_spanish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`procedimiento_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of procedimiento
@@ -359,7 +359,7 @@ DROP TABLE IF EXISTS `restaurar`;
 CREATE TABLE `restaurar`  (
   `rest_id` int NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`rest_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of restaurar
@@ -373,7 +373,7 @@ CREATE TABLE `rol`  (
   `rol_id` int NOT NULL,
   `rol_nombre` varchar(30) CHARACTER SET utf8 COLLATE utf8_spanish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`rol_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of rol
@@ -390,7 +390,7 @@ CREATE TABLE `sangre`  (
   `sag_id` int NOT NULL AUTO_INCREMENT,
   `tp_sangre` varchar(255) CHARACTER SET utf8 COLLATE utf8_spanish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`sag_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sangre
@@ -412,7 +412,7 @@ CREATE TABLE `usuario`  (
   PRIMARY KEY (`usu_id`) USING BTREE,
   INDEX `rol_id`(`rol_id`) USING BTREE,
   CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`rol_id`) REFERENCES `rol` (`rol_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 44 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 44 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of usuario

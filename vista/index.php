@@ -160,7 +160,7 @@ folder instead of downloading all of them to reduce the load. -->
               <!--ususario-->
         <header style="text-align:center">
           <a href="dashboard/vista_dashboard_listar.php" class="logo">
-            <i class="fa fa-user"></i> <span class="logo-lg">INICIO</span>
+            <i class="fa fa-github-alt"></i> <span class="logo-lg">INICIO</span>
           </a>
           </header>
           <a onclick="cargar_contenido('contenido_principal','paciente/vista_paciente_listar.php')">
@@ -196,7 +196,7 @@ folder instead of downloading all of them to reduce the load. -->
           </a>
               <!--Procedimientos-->
           <a onclick="cargar_contenido('contenido_principal','procedimiento/vista_procedimiento_listar.php')">
-            <i class="fa fa-spinner"></i> <span>Procedimientos</span>
+            <i class="fa fa-hourglass-3"></i> <span>Procedimientos</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -221,6 +221,24 @@ folder instead of downloading all of them to reduce the load. -->
             </span>
           </a><a onclick="cargar_contenido('contenido_principal','historial/vista_historial_listar.php')">
             <i class="fa fa-file-text-o"></i> <span>Historial Médico</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          </a><a onclick="cargar_contenido('contenido_principal','restaurar/vista_restaurar_listar.php')">
+            <i class="fa fa-history"></i> <span>Restaurar</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          </a><a onclick="cargar_contenido('contenido_principal','auditoria/vista_auditoria_listar.php')">
+            <i class="fa fa-television"></i> <span>Auditoria</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          </a><a onclick="cargar_contenido('contenido_principal','donaciones/vista_donaciones_listar.php')">
+            <i class="fa fa-plus-square"></i> <span>Donaciones</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -300,6 +318,13 @@ folder instead of downloading all of them to reduce the load. -->
             </div>
             <div class="content">
               <div class="container-fluid">
+                <a onclick="cargar_contenido('contenido_principal','dashboard/vista_dashboard_grafica.php')">
+                  <i class="fa fa-bar-chart"></i>
+                  <i class="fa fa-file-text-o"></i><span>Graficas</span>
+                  <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                  </span>
+                </a>
                 <div class="row">
                   <div class="col-lg-3 col-6">
                   </div>
