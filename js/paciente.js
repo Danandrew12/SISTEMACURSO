@@ -27,8 +27,10 @@ function listar_paciente(){
 					return "FEMENINO";
 				}
 			}
-		},
+			},
+			{"data":"paciente_fenac"},
 			{"data":"paciente_movil"},
+			{"data":"tp_sangre"},
 			{"data":"paciente_estatus",
 			render: function (data, type, row ){
 				if(data=='ACTIVO'){
@@ -79,6 +81,8 @@ $('#tabla_paciente').on('click','.editar',function(){
 	$("#txt_apemat_editar").val(data.paciente_apemat);
 	$("#txt_direccion_editar").val(data.paciente_direccion);
 	$("#txt_movil_editar").val(data.paciente_movil);
+	$("#txt_fenac_editar").val(data.paciente_fenac);
+	$("#cbm_sangre_editar").select2().val(data.sag_id).trigger('change.select2');
 	$("#cbm_sexo_editar").val(data.paciente_sexo).trigger("change");
 	$("#cbm_estatus").val(data.paciente_estatus).trigger("change");
 
@@ -95,6 +99,27 @@ function filterGlobal() {
 	).draw();
 }
 
+function listar_combo_sangre(){
+	$.ajax({
+		"url":"../contolador/paciente/controlador_combo_sangre_listar.php",
+		type:'POST'
+	}).done(function(resp){
+		var data = JSON.parse(resp);
+		var cadena="<option value=''>Selecione</option>";
+		if(data.length>0){
+			for(var i=0; i < data.length; i++){
+				cadena+="<option value='"+data[i][0]+"'>"+data[i][1]+"</option>";
+			}
+			$("#cbm_sangre").html(cadena);
+			$("#cbm_sangre_editar").html(cadena);
+		}else{
+			cadena+="<option value=''>NO SE ENCONTRARON REGISTROS</option>";
+			$("#cbm_sangre").html(cadena);
+			$("#cbm_sangre_editar").html(cadena);
+		}
+	})
+}
+
 function Registrar_Paciente(){
 	var nombres= $("#txt_nombres").val();
 	var apepat= $("#txt_apepat").val();
@@ -102,9 +127,11 @@ function Registrar_Paciente(){
 	var direccion= $("#txt_direccion").val();
 	var movil= $("#txt_movil").val();
 	var sexo= $("#cbm_sexo").val();
+	var fcha= $("#txt_fenac").val();
 	var nrodocumento= $("#txt_ndoc").val();
+	var sangre= $("#cbm_sangre").val();
 	
-	if(nombres.length==0 || apepat.length==0 || apemat.length==0 || direccion.length==0 || movil.length==0 || sexo.length==0 || nrodocumento.length==0){
+	if(nombres.length==0 || apepat.length==0 || apemat.length==0 || direccion.length==0 || movil.length==0 || sexo.length==0 || fcha==0 || nrodocumento.length==0 || sangre==0){
 		return Swal.fire("Mensaje De Advertencia","Llene todos los campos","warning");
 	}
 	$.ajax({
@@ -117,7 +144,9 @@ function Registrar_Paciente(){
 			direccion:    direccion,
 			movil:        movil,
 			sexo:         sexo,
-			nrodocumento: nrodocumento
+			fcha:         fcha,
+			nrodocumento: nrodocumento,
+			sangre:       sangre
 	
 		}
 	}).done(function(resp){
@@ -145,12 +174,14 @@ function Modificar_Paciente(){
 	var apemat= $("#txt_apemat_editar").val();
 	var direccion= $("#txt_direccion_editar").val();
 	var movil= $("#txt_movil_editar").val();
+	var fecha= $("#txt_fenac_editar").val();
+	var sangre= $("#cbm_sangre_editar").val();
 	var sexo= $("#cbm_sexo_editar").val();
 	var nrodocumentoactual= $("#txt_ndoc_actual_editar").val();
 	var nrodocumentonuevo= $("#txt_ndoc_nuevo_editar").val();
 	var estatus= $("#cbm_estatus").val();
 	
-	if(id.length==0 || nombres.length==0 || apepat.length==0 || apemat.length==0 || direccion.length==0 || movil.length==0 || sexo.length==0 || nrodocumentonuevo.length==0){
+	if(id.length==0 || nombres.length==0 || apepat.length==0 || apemat.length==0 || direccion.length==0 || movil.length==0 || fecha.length==0 || sangre.length==0 || sexo.length==0 || nrodocumentonuevo.length==0){
 		return Swal.fire("Mensaje De Advertencia","Llene todos los campos","warning");
 	}
 	$.ajax({
@@ -163,6 +194,8 @@ function Modificar_Paciente(){
 			apemat:       apemat,
 			direccion:    direccion,
 			movil:        movil,
+			fecha:        fecha,
+			sangre:       sangre,
 			sexo:         sexo,
 			nrodocumentoactual: nrodocumentoactual,
 			nrodocumentonuevo: nrodocumentonuevo,

@@ -27,16 +27,18 @@
                   <table id="tabla_medico" class="display responsive nowrap" style="width:100%">
                     <thead>
                       <tfoot>
-                      <tr>
-                        <th>#</th>
-                        <th>Nro Doc</th>
-                        <th>Medico</th>
-                        <th>Nro Colegiatura</th>
-                        <th>Especialidad</th>
-                        <th>Sexo</th>
-                        <th>Celular</th>
-                        <th>Acción</th>
-                      </tr>
+                        <tr>
+                          <th>#</th>
+                          <th>Nro Doc</th>
+                          <th>Medico</th>
+                          <th>Nro Colegiatura</th>
+                          <th>Especialidad</th>
+                          <th>Sexo</th>
+                          <th>Fecha de nacimiento</th>
+                          <th>Celular</th>
+                          <th>Tipo de sangre</th>
+                          <th>Acción</th>
+                        </tr>
                       </tfoot>
                     </thead>
                     <tfoot>
@@ -47,7 +49,9 @@
                         <th>Nro Colegiatura</th>
                         <th>Especialidad</th>
                         <th>Sexo</th>
+                        <th>Fecha de nacimiento</th>
                         <th>Celular</th>
+                        <th>Tipo de sangre</th>
                         <th>Acción</th>
                       </tr>
                     </tfoot>
@@ -91,6 +95,12 @@
                         <label for="">Movil</label>
                         <input type="text" class="form-control" id="txt_movil"placeholder="Ingrese Movil" onkeypress="return soloNumeros(event)"><br>
                    </div>
+
+                   <div class="col-sm-4">
+                      <label for="">Tipo de Sangre</label>
+                      <select class="js-example-basic-single" name="state" id="cbm_sangre" style="width: 100%;">
+                      </select><br>
+                    </div>
 
                     <div class="col-lg-4">
                         <label for="">Sexo</label>
@@ -166,83 +176,89 @@
             </div>
             <div class="row">
               <div class="modal-body">
-                  <div class="col-lg-12">
+                <div class="col-lg-12">
                         <input type="text" id="id_medico" hidden="">
                         <label for="">Nombre</label>
                         <input type="text" class="form-control" id="txt_nombres_editar"placeholder="Ingrese La Especialidad" maxlength="50" onkeypress="return soloLetras(event)"><br>
-                  </div>
+                </div>
 
-                   <div class="col-lg-6">
+                <div class="col-lg-6">
                         <label for="">Apellido paterno</label>
                         <input type="text" class="form-control" id="txt_apepat_editar"placeholder="Ingrese Apellido paterno" maxlength="50" onkeypress="return soloLetras(event)"><br>
-                   </div>
+                </div>
 
-                   <div class="col-lg-6">
+                <div class="col-lg-6">
                         <label for="">Apellido materno</label>
                         <input type="text" class="form-control" id="txt_apemat_editar"placeholder="Ingrese Apellido materno" maxlength="50" onkeypress="return soloLetras(event)"><br>
-                   </div>
+                </div>
 
-                   <div class="col-lg-6">
+                <div class="col-lg-6">
                         <label for="">Direccion</label>
                         <input type="text" class="form-control" id="txt_direccion_editar"placeholder="Ingrese La Direccion" maxlength="50" onkeypress="return soloLetras(event)"><br>
-                   </div>
+                </div>
 
-                   <div class="col-lg-6">
+                <div class="col-lg-6">
                         <label for="">Movil</label>
                         <input type="text" class="form-control" id="txt_movil_editar"placeholder="Ingrese Movil" onkeypress="return soloNumeros(event)"><br>
-                   </div>
+                </div>
 
-                    <div class="col-lg-6">
+                <div class="col-lg-6">
                         <label for="">Sexo</label>
                         <select class="js-example-basic-single" name="state" id="cbm_sexo_editar" style="width: 100%;">
                              <option value="M">MASCULINO</option>
                              <option value="F">FEMENINO</option>
-                        </select><br><br>
-
-                   <div class="col-lg-6">
+                        </select>
+                </div>   
+                <div class="col-lg-6">
                         <label for="">Fecha De Nacimiento</label>
                         <input type="date" class="form-control" id="txt_fenac_editar"><br>
-                   </div>
+                </div>
 
-                   <div class="col-lg-6">
-                        <label for="">Nro De Documento</label>
-                        <input type="text" id="txt_ndoc_editar_actual" hidden>
-                        <input type="text" class="form-control" id="txt_ndoc_editar_nuevo"placeholder="Ingrese Numero De Documento" onkeypress="return soloNumeros(event)"><br>
-                   </div>
+                <div class="col-lg-6">
+                    <label for="">Tipo de sangre</label>
+                    <select class="js-example-basic-single" name="state" id="cbm_sangre_editar" style="width: 100%;">
+                    </select><br><br>
+                </div>
 
-                    <div class="col-lg-6">
-                        <label for="">Nro Colegiatura</label>
-                        <input type="text" id="txt_ncol_editar_actual" hidden>
-                        <input type="text" class="form-control" id="txt_ncol_editar_nuevo"placeholder="Ingrese Numero Colegiatura" onkeypress="return soloNumeros(event)"><br>
-                   </div>
+                <div class="col-lg-6">
+                  <label for="">Nro De Documento</label>
+                  <input type="text" id="txt_ndoc_editar_actual" hidden>
+                  <input type="text" class="form-control" id="txt_ndoc_editar_nuevo"placeholder="Ingrese Numero De Documento" onkeypress="return soloNumeros(event)"><br>
+                </div>
 
-                   <div class="col-lg-6">
-                         <label for="">Especialidad</label>
-                        <select class="js-example-basic-single" name="state" id="cbm_especialidad_editar" style="width: 100%;">
-                        </select><br>
-                   </div>
+                <div class="col-lg-6">
+                  <label for="">Nro Colegiatura</label>
+                  <input type="text" id="txt_ncol_editar_actual" hidden>
+                  <input type="text" class="form-control" id="txt_ncol_editar_nuevo"placeholder="Ingrese Numero Colegiatura" onkeypress="return soloNumeros(event)"><br>
+                </div>
 
-                   <div class="col-lg-12" style="text-align: center;">
-                       <b>DATOS DEL USUARIO</b><br><br>
-                  </div>
+                <div class="col-lg-6">
+                  <label for="">Especialidad</label>
+                  <select class="js-example-basic-single" name="state" id="cbm_especialidad_editar" style="width: 100%;">
+                  </select><br>
+                </div>
 
-                  <div class="col-lg-6">
-                    <input type="text" id="id_usuario" hidden>
-                    <label for="">Usuario</label>
-                    <input type="text" class="form-control" id="txt_usu_editar" placeholder="Ingresar usuario" disabled><br>
-                  </div>
+                <div class="col-lg-12" style="text-align: center;">
+                  <b>DATOS DEL USUARIO</b><br><br>
+                </div>
 
-                  <div class="col-lg-6">
-                    <label for="">Rol</label>
-                    <select class="js-example-basic-single" name="state" id="cbm_rol_editar" style="width: 100%;" disabled></select><br><br>
-                  </div>
+                <div class="col-lg-6">
+                  <input type="text" id="id_usuario" hidden>
+                  <label for="">Usuario</label>
+                  <input type="text" class="form-control" id="txt_usu_editar" placeholder="Ingresar usuario" disabled><br>
+                </div>
 
-                  <div class="col-lg-12">
-                    <label for="">Email</label>
-                    <input type="text" class="form-control" id="txt_email_editar" placeholder="Ingresar Email">
-                    <label for="" id="emailOK_editar" style="color:red;"></label>
-                    <input type="text" id="validar_email_editar" hidden>
-                  </div>
+                <div class="col-lg-6">
+                  <label for="">Rol</label>
+                  <select class="js-example-basic-single" name="state" id="cbm_rol_editar" style="width: 100%;" disabled></select><br><br>
+                </div>
+
+                <div class="col-lg-12">
+                  <label for="">Email</label>
+                  <input type="text" class="form-control" id="txt_email_editar" placeholder="Ingresar Email">
+                  <label for="" id="emailOK_editar" style="color:red;"></label>
+                  <input type="text" id="validar_email_editar" hidden>
+                </div>
               </div>
           </div>
           <div class="modal-footer">
@@ -258,6 +274,7 @@
     listar_medico();
     listar_combo_rol();
     listar_combo_especialidad();
+    listar_combo_sangre();
     $('.js-example-basic-single').select2();
     $("#modal_registro").on('shown.bs.modal',function(){
       $("#txt_nombres").focus();

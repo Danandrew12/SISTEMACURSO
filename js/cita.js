@@ -67,7 +67,7 @@ $('#tabla_cita').on('click','.editar',function(){
     $("#txt_cita_id").val(data.cita_id);
     $("#cbm_paciente_editar").val(data.paciente_id).trigger("change");
     $("#cbm_especialidad_editar").val(data.especialidad_id).trigger("change");
-    listar_doctor_combo_editar(data.especialidad_id,data.especialidad_id);
+    listar_doctor_combo_editar(data.especialidad_id,data.medico_id);
     $("#cbm_estatus").val(data.cita_estatus).trigger("change");
     $("#txt_descripcion_editar").val(data.cita_descripcion);
     

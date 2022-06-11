@@ -20,6 +20,7 @@ function listar_medicamento(){
 			{"data":"medicamento_alias"},
 			{"data":"medicamento_stock"},
 			{"data":"medicamento_fregistro"},
+			{"data":"medicamento_fechf"},
 			{"data":"medicamento_estatus",
 			render: function (data, type, row ){
 				if(data=='ACTIVO'){
@@ -69,6 +70,7 @@ $('#tabla_medicamento').on('click','.editar',function(){
 	$("#txt_medicamento_nuevo_editar").val(data.medicamento_nombre);
 	$("#txt_alias_editar").val(data.medicamento_alias);
 	$("#txt_stock_editar").val(data.medicamento_stock);
+	$("#txt_fenac_editar").val(data.medicamento_fechf);
 	$("#cbm_estatus_editar").val(data.medicamento_estatus).trigger("change");
 })
 
@@ -85,15 +87,16 @@ function AbrilModalRegistro(){
 
 function Registrar_Medicamento(){
 	var medicamento  =$("#txt_medicamento").val();
-	var alias  =$("#txt_alias").val();
+	var alias   =$("#txt_alias").val();
 	var stock   =$("#txt_stock").val();
+	var fecha   =$("#txt_fenac").val();
 	var estatus =$("#cbm_estatus").val();
 
 	if(stock<0){
 		Swal.fire("Mensaje De Advertencia","El stock no puede ser negativo","warning");
 	}
 
-	if(medicamento.length==0 || alias.length==0 || stock.length==0 || estatus.length==0){
+	if(medicamento.length==0 || alias.length==0 || stock.length==0 || fecha.length==0 || estatus.length==0){
 		Swal.fire("Mensaje De Advertencia","Llenen los campos vacios","warning");
 	}
 
@@ -104,6 +107,7 @@ function Registrar_Medicamento(){
 			me:medicamento,
 			ali:alias,
 			st:stock,
+			fe:fecha,
 			es:estatus
 		}
 	}).done(function(resp){
@@ -129,13 +133,14 @@ function Modificar_Medicamento(){
 	var medicamentonuevo  =$("#txt_medicamento_nuevo_editar").val();
 	var alias  =$("#txt_alias_editar").val();
 	var stock   =$("#txt_stock_editar").val();
+	var fecha   =$("#txt_fenac_editar").val();
 	var estatus =$("#cbm_estatus_editar").val();
 
 	if(stock<0){
 		Swal.fire("Mensaje De Advertencia","El stock no puede ser negativo","warning");
 	}
 
-	if(medicamentoactual.length==0 || medicamentonuevo.length==0 || alias.length==0 || stock.length==0 || estatus.length==0){
+	if(medicamentoactual.length==0 || medicamentonuevo.length==0 || alias.length==0 || stock.length==0 || fecha.length==0 || estatus.length==0){
 		Swal.fire("Mensaje De Advertencia","Llenen los campos vacios","warning");
 	}
 
@@ -148,6 +153,7 @@ function Modificar_Medicamento(){
 			menu:medicamentonuevo,
 			ali:alias,
 			st:stock,
+			fe:fecha,
 			es:estatus
 		}
 	}).done(function(resp){

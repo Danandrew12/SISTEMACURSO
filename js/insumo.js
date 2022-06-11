@@ -19,6 +19,7 @@ function listar_insumo(){
 			{"data":"insumo_nombre"},
 			{"data":"insumo_stock"},
 			{"data":"insumo_fregistro"},
+			{"data":"insumo_fechf"},
 			{"data":"insumo_estatus",
 			render: function (data, type, row ){
 				if(data=='ACTIVO'){
@@ -66,6 +67,7 @@ $('#tabla_insumo').on('click','.editar',function(){
 	$("#txt_idinsumo").val(data.insumo_id);
 	$("#txt_insumo_actual_editar").val(data.insumo_nombre);
 	$("#txt_insumo_nuevo_editar").val(data.insumo_nombre);
+	$("#txt_fenac_editar").val(data.insumo_fechf);
 	$("#txt_stock_editar").val(data.insumo_stock);
 	$("#cbm_estatus_editar").val(data.insumo_estatus).trigger("change");
 })
@@ -84,13 +86,14 @@ function filterGlobal() {
 function Registrar_Insumo(){
 	var insumo  =$("#txt_insumo").val();
 	var stock   =$("#txt_stock").val();
+	var fechv  =$("#txt_fenac").val();
 	var estatus =$("#cbm_estatus").val();
 
 	if(stock<0){
 		Swal.fire("Mensaje De Advertencia","El stock no puede ser negativo","warning");
 	}
 
-	if(insumo.length==0 || stock.length==0 || estatus.length==0){
+	if(insumo.length==0 || stock.length==0 || fechv.length==0 || estatus.length==0){
 		Swal.fire("Mensaje De Advertencia","Llenen los campos vacios","warning");
 	}
 
@@ -100,6 +103,7 @@ function Registrar_Insumo(){
 		data:{
 			in:insumo,
 			st:stock,
+			fe:fechv,
 			es:estatus
 		}
 	}).done(function(resp){
@@ -119,23 +123,21 @@ function Registrar_Insumo(){
 	})
 }
 
-function LimpiarCampos(){
-	$("#txt_insumo").val("");
-	$("#txt_stock").val("");
-}
+
 
 function Modificar_Insumo(){
 	var id            =$("#txt_idinsumo").val();
 	var insumoactual  =$("#txt_insumo_actual_editar").val();
-	var insumonuevo  =$("#txt_insumo_nuevo_editar").val();
+	var insumonuevo   =$("#txt_insumo_nuevo_editar").val();
 	var stock   	  =$("#txt_stock_editar").val();
+	var fechv         =$("#txt_fenac_editar").val();
 	var estatus 	  =$("#cbm_estatus_editar").val();
 
 	if(stock<0){
 		Swal.fire("Mensaje De Advertencia","El stock no puede ser negativo","warning");
 	}
 
-	if(insumoactual.length==0 || insumoactual.length==0 || stock.length==0 || estatus.length==0){
+	if(insumoactual.length==0 || insumoactual.length==0 || stock.length==0 || fechv.length==0 || estatus.length==0){
 		Swal.fire("Mensaje De Advertencia","Llenen los campos vacios","warning");
 	}
 
@@ -147,6 +149,7 @@ function Modificar_Insumo(){
 			inac:insumoactual,
 			innu:insumonuevo,
 			st:stock,
+			fe:fechv,
 			es:estatus
 		}
 	}).done(function(resp){
@@ -162,4 +165,9 @@ function Modificar_Insumo(){
 				Swal.fire("Mensaje De Error","Error no se puede completar el registro","error");
 			}
 	})
+}
+
+function LimpiarCampos(){
+	$("#txt_insumo").val("");
+	$("#txt_stock").val("");
 }

@@ -20,8 +20,8 @@
 			}
 		}
 
-		function Registrar_Insumo($insumo,$stock,$estatus){
-			$sql = "call SP_REGISTRAR_INSUMO('$insumo','$stock','$estatus')";
+		function Registrar_Insumo($insumo,$stock,$fechv,$estatus){
+			$sql = "call SP_REGISTRAR_INSUMO('$insumo','$stock','$fechv','$estatus')";
 			if ($consulta = $this->conexion->conexion->query($sql)) {
 				if ($row = mysqli_fetch_array($consulta)) {
 						return $id= trim($row[0]);
@@ -31,8 +31,8 @@
 			}
 		}
 
-		function Modificar_Insumo($id,$insumoactual,$insumonuevo,$stock,$estatus){
-			$sql = "call SP_MODIFICAR_INSUMO('$id','$insumoactual','$insumonuevo','$stock','$estatus')";
+		function Modificar_Insumo($id,$insumoactual,$insumonuevo,$stock,$fechv,$estatus){
+			$sql = "call SP_MODIFICAR_INSUMO('$id','$insumoactual','$insumonuevo','$stock','$fechv','$estatus')";
 			if ($consulta = $this->conexion->conexion->query($sql)) {
 				if ($row = mysqli_fetch_array($consulta)) {
 						return $id= trim($row[0]);

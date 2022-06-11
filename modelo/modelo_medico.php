@@ -33,8 +33,21 @@
 			}
 		}
 
-		function Registrar_Medico($nombres,$apepat,$apemat,$direccion,$movil,$sexo,$fenac,$ndoc,$ncol,$especialidad,$usuario,$contra,$rol,$email){
-			$sql = "call SP_REGISTRAR_MEDICO('$nombres','$apepat','$apemat','$direccion','$movil','$sexo','$fenac','$ndoc','$ncol','$especialidad','$usuario','$contra','$rol','$email')";
+		function listar_sangre_combo(){
+			$sql = "call SP_LISTAR_SANGRE_COMBO()";
+			$arreglo = array();
+			if ($consulta = $this->conexion->conexion->query($sql)) {
+				while ($consulta_VU = mysqli_fetch_array($consulta)) {
+					$arreglo[]=$consulta_VU;
+				
+				}
+				return $arreglo;
+				$this->conexion->cerrar();
+			}
+		}
+
+		function Registrar_Medico($nombres,$apepat,$apemat,$direccion,$movil,$sangre,$sexo,$fenac,$ndoc,$ncol,$especialidad,$usuario,$contra,$rol,$email){
+			$sql = "call SP_REGISTRAR_MEDICO('$nombres','$apepat','$apemat','$direccion','$movil','$sangre','$sexo','$fenac','$ndoc','$ncol','$especialidad','$usuario','$contra','$rol','$email')";
 			if ($consulta = $this->conexion->conexion->query($sql)) {
 				if ($row = mysqli_fetch_array($consulta)) {
 						return $id= trim($row[0]);
@@ -44,8 +57,8 @@
 			}
 		}
 
-		function Modifiar_Medico($idmedico,$nombres,$apepat,$apemat,$direccion,$movil,$sexo,$fenac,$ndocactual,$ndocnuevo,$ncolactual,$ncolnuevo,$especialidad,$idusuario,$email){
-			$sql = "call SP_MODIFICAR_MEDICO('$idmedico','$nombres','$apepat','$apemat','$direccion','$movil','$sexo','$fenac','$ndocactual','$ndocnuevo','$ncolactual','$ncolnuevo','$especialidad','$idusuario','$email')";
+		function Modifiar_Medico($idmedico,$nombres,$apepat,$apemat,$direccion,$movil,$sexo,$fenac,$sangre,$ndocactual,$ndocnuevo,$ncolactual,$ncolnuevo,$especialidad,$idusuario,$email){
+			$sql = "call SP_MODIFICAR_MEDICO('$idmedico','$nombres','$apepat','$apemat','$direccion','$movil','$sexo','$fenac','$sangre','$ndocactual','$ndocnuevo','$ncolactual','$ncolnuevo','$especialidad','$idusuario','$email')";
 			if ($consulta = $this->conexion->conexion->query($sql)) {
 				if ($row = mysqli_fetch_array($consulta)) {
 						return $id= trim($row[0]);

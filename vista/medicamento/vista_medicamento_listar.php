@@ -33,6 +33,7 @@
                     <th>Alias</th>
                     <th>Stock</th>
                     <th>Fecha Registro</th>
+                    <th>Fecha Vencimiento</th>
                     <th>Estatus</th>
                     <th>Acción</th>
                   </tr>
@@ -45,6 +46,7 @@
                     <th>Alias</th>
                     <th>Stock</th>
                     <th>Fecha Registro</th>
+                    <th>Fecha Vencimiento</th>
                     <th>Estatus</th>
                     <th>Acción</th>
                   </tr>
@@ -77,6 +79,11 @@
                   <div class="col-lg-12">
                       <label for="">Stock</label>
                       <input type="text" class="form-control" id="txt_stock"placeholder="Ingrese stock" maxlength="5" onkeypress="return soloNumeros(event)"><br>
+                 </div>
+
+                 <div class="col-lg-12">
+                        <label for="">Fecha De Vencimiento</label>
+                        <input type="date" class="form-control" id="txt_fenac"><br>
                  </div>
 
                  <div class="col-lg-12">
@@ -118,7 +125,11 @@
 
                   <div class="col-lg-12">
                       <label for="">Stock</label>
-                      <input type="text" class="form-control" id="txt_stock_editar"placeholder="Ingrese stock" maxlength="5" onkeypress="return soloNumeros(event)"><br>
+                      <input type="text" class="form-control" id="txt_stock_editar"placeholder="Ingrese stock" maxlength="5" onkeypress="return soloNumeros(event)" disabled><br>
+                 </div>
+                 <div class="col-lg-12">
+                        <label for="">Fecha De Vencimiento</label>
+                        <input type="date" class="form-control" id="txt_fenac_editar"><br>
                  </div>
 
                  <div class="col-lg-12">

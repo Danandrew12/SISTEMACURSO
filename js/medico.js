@@ -29,7 +29,9 @@ function listar_medico(){
 				}
 			}
 		},
+		{"data":"medico_fenac"},
 		{"data":"medico_movil"},
+		{"data":"tp_sangre"},
 		{"defaultContent":"<button style='font-size:13px;' type='button' class='editar btn btn-primary'><i class='fa fa-edit'></i></button>"}
 	],
 
@@ -70,6 +72,7 @@ $('#tabla_medico').on('click','.editar',function(){
 	$("#txt_movil_editar").val(data.medico_movil);
 	$("#cbm_sexo_editar").val(data.medico_sexo).trigger("change");
 	$("#txt_fenac_editar").val(data.medico_fenac);
+	$("#cbm_sangre_editar").val(data.sag_id).trigger("change");
 	$("#txt_ndoc_editar_actual").val(data.medico_nrodocumento);
 	$("#txt_ndoc_editar_nuevo").val(data.medico_nrodocumento);
 	$("#txt_ncol_editar_actual").val(data.medico_colegiatura);
@@ -140,12 +143,34 @@ function listar_combo_especialidad(){
 	})
 }
 
+function listar_combo_sangre(){
+	$.ajax({
+		"url":"../contolador/medico/controlador_combo_sangre_listar.php",
+		type:'POST'
+	}).done(function(resp){
+		var data = JSON.parse(resp);
+		var cadena="<option value=''>Selecione</option>";
+		if(data.length>0){
+			for(var i=0; i < data.length; i++){
+				cadena+="<option value='"+data[i][0]+"'>"+data[i][1]+"</option>";
+			}
+			$("#cbm_sangre").html(cadena);
+			$("#cbm_sangre_editar").html(cadena);
+		}else{
+			cadena+="<option value=''>NO SE ENCONTRARON REGISTROS</option>";
+			$("#cbm_sangre").html(cadena);
+			$("#cbm_sangre_editar").html(cadena);
+		}
+	})
+}
+
 function Registrar_Medico(){
 	var nombres= $("#txt_nombres").val();
 	var apepat= $("#txt_apepat").val();
 	var apemat= $("#txt_apemat").val();
 	var direccion= $("#txt_direccion").val();
 	var movil= $("#txt_movil").val();
+	var sangre= $("#cbm_sangre").val();
 	var sexo= $("#cbm_sexo").val();
 	var fenac= $("#txt_fenac").val();
 	var ndoc= $("#txt_ndoc").val();
@@ -160,7 +185,7 @@ function Registrar_Medico(){
 		return Swal.fire("Mensaje de advertencia","El Email ingresado no tiene el formato correcto","warning")
 	}
 
-	if(nombres.length==0 || apepat.length==0 || apemat.length==0 || direccion.length==0 || movil.length==0 || sexo.length==0 || fenac.length==0 || ndoc.length==0 || ncol.length==0 || especialidad.length==0 || usuario.length==0 || contra.length==0 || rol.length==0 || email.length==0){
+	if(nombres.length==0 || apepat.length==0 || apemat.length==0 || direccion.length==0 || movil.length==0 || sangre.length==0 || sexo.length==0 || fenac.length==0 || ndoc.length==0 || ncol.length==0 || especialidad.length==0 || usuario.length==0 || contra.length==0 || rol.length==0 || email.length==0){
 		return Swal.fire("Mensaje De Advertencia","Llene todos los campos","warning");
 	}
 	$.ajax({
@@ -172,6 +197,7 @@ function Registrar_Medico(){
 			apemat:       apemat,
 			direccion:    direccion,
 			movil:        movil,
+			sangre:       sangre,
 			sexo:         sexo,
 			fenac:        fenac,
 			ndoc:         ndoc,
@@ -210,6 +236,7 @@ function Editar_Medico(){
 	var movil= $("#txt_movil_editar").val();
 	var sexo= $("#cbm_sexo_editar").val();
 	var fenac= $("#txt_fenac_editar").val();
+	var sangre= $("#cbm_sangre_editar").val();
 	var ndocactual= $("#txt_ndoc_editar_actual").val();
 	var ndocnuevo= $("#txt_ndoc_editar_nuevo").val();
 	var ncolactual= $("#txt_ncol_editar_actual").val();
@@ -222,7 +249,7 @@ function Editar_Medico(){
 		return Swal.fire("Mensaje de advertencia","El Email ingresado no tiene el formato correcto","warning")
 	}
 
-	if(nombres.length==0 || apepat.length==0 || apemat.length==0 || direccion.length==0 || movil.length==0 || sexo.length==0 || fenac.length==0 || ndocnuevo.length==0 || ncolnuevo.length==0 || especialidad.length==0 || email.length==0){
+	if(nombres.length==0 || apepat.length==0 || apemat.length==0 || direccion.length==0 || movil.length==0 || sexo.length==0 || fenac.length==0 || sangre.length==0 || ndocnuevo.length==0 || ncolnuevo.length==0 || especialidad.length==0 || email.length==0){
 		return Swal.fire("Mensaje De Advertencia","Llene todos los campos","warning");
 	}
 	$.ajax({
@@ -237,6 +264,7 @@ function Editar_Medico(){
 			movil:        movil,
 			sexo:         sexo,
 			fenac:        fenac,
+			sangre:       sangre,
 			ndocactual:   ndocactual,
 			ndocnuevo:    ndocnuevo,
 			ncolactual:   ncolactual,
