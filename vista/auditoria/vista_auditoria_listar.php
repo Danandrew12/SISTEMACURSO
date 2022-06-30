@@ -1,4 +1,4 @@
-<script type="text/javascript" src="../js/medico.js?rev=<?php echo time();?>"></script>
+<script type="text/javascript" src="../js/auditoria.js?rev=<?php echo time();?>"></script>
 <form autocomplete="false" onsubmit="return false">
     <div class="col-lg-12">
         <div class="box box-warning box-solid">
@@ -15,31 +15,23 @@
                 <div class="box-body">
                     <div class="form-group">
                     </div>
-                    <table id="tabla_medico" class="display responsive nowrap" style="width:100%">
+                    <table id="tabla_auditiria" class="display responsive nowrap" style="width:100%">
                         <thead>
                         <tfoot>
                         <tr>
                             <th>#</th>
-                            <th>Nro Doc</th>
-                            <th>Medico</th>
-                            <th>Nro Colegiatura</th>
-                            <th>Especialidad</th>
-                            <th>Sexo</th>
-                            <th>Celular</th>
-                            <th>Acción</th>
+                            <th>Accion</th>
+                            <th>Usuario</th>
+                            <th>Fecha</th>
                         </tr>
                         </tfoot>
                         </thead>
                         <tfoot>
                         <tr>
                             <th>#</th>
-                            <th>Nro Doc</th>
-                            <th>Medico</th>
-                            <th>Nro Colegiatura</th>
-                            <th>Especialidad</th>
-                            <th>Sexo</th>
-                            <th>Celular</th>
-                            <th>Acción</th>
+                            <th>Accion</th>
+                            <th>Usuario</th>
+                            <th>Fecha</th>
                         </tr>
                         </tfoot>
                     </table>
@@ -53,6 +45,10 @@
 
 
 <script>
+    $(document).ready(function(){
+        listar_auditoria();
+
+    });
 
    $('.box').boxWidget({
     animationSpeed : 500,

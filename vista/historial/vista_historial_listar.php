@@ -180,6 +180,7 @@
 
 <script>
     $(document).ready(function(){
+      listar_historial();
       $('.js-example-basic-single').select2();
       var n = new Date();
       var y = n.getFullYear(); 
@@ -198,9 +199,8 @@
       $("#modal_registro").on('shown.bs.modal',function(){
         $("#txt_especialidad").focus();
       });
-      listar_historial();
 
-  });
+    });
 
 
   $('.box').boxWidget({

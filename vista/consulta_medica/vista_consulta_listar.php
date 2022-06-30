@@ -135,6 +135,8 @@
 
 <script>
     $(document).ready(function(){
+      listar_consulta();
+      listar_paciente_combo_consulta();
       $('.js-example-basic-single').select2();
       var n = new Date();
       var y = n.getFullYear(); 
@@ -153,10 +155,8 @@
       $("#modal_registro").on('shown.bs.modal',function(){
         $("#txt_especialidad").focus();
       });
-      listar_consulta();
-      listar_paciente_combo_consulta();
 
-  });
+    });
 
 
   $('.box').boxWidget({

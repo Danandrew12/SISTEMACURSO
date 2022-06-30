@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-06-2022 a las 19:40:04
+-- Tiempo de generación: 22-06-2022 a las 15:19:17
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -44,6 +44,14 @@ ELSE
 		SELECT @INTENTO;
 END IF;
 END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_LISTAR_AUDITORIA` ()   SELECT
+	auditoria.audi_id, 
+	auditoria.fecha, 
+	auditoria.accion, 
+	auditoria.usu_id
+FROM
+	auditoria$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_LISTAR_CITA` ()   SELECT c.cita_id,c.cita_nroatencion,c.cita_feregistro,c.cita_estatus,p.paciente_id,concat_ws(' ',p.paciente_nombre,p.paciente_apepat,p.paciente_apemat) as paciente,c.medico_id,concat_ws(' ',m.medico_nombre,m.medico_apepart,m.medico_apemart) as medico, e.especialidad_id, e.especialidad_nombre, c.cita_descripcion 
 FROM cita as c 
@@ -376,12 +384,13 @@ END IF;
 END IF;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MODIFICAR_MEDICAMENTO` (IN `ID` INT, IN `MEDICAMENTOACTUAL` VARCHAR(50), IN `MEDICAMENTONUEVO` VARCHAR(50), IN `ALIAS` VARCHAR(50), IN `STOCK` INT, IN `ESTATUS` VARCHAR(10))   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MODIFICAR_MEDICAMENTO` (IN `ID` INT, IN `MEDICAMENTOACTUAL` VARCHAR(50), IN `MEDICAMENTONUEVO` VARCHAR(50), IN `ALIAS` VARCHAR(50), IN `STOCK` INT, IN `FECHA` DATE, IN `ESTATUS` VARCHAR(10))   BEGIN
 DECLARE CANTIDAD INT;
 IF MEDICAMENTOACTUAL= MEDICAMENTONUEVO THEN
 	UPDATE medicamento SET
 	medicamento_alias=ALIAS,
 	medicamento_stock=STOCK,
+	medicamento_fechf=FECHA,
 	medicamento_estatus=ESTATUS
 	WHERE medicamento_id=ID;
 	SELECT 1;
@@ -394,6 +403,7 @@ SET @CANTIDAD:=(SELECT COUNT(*) FROM medicamento WHERE medicamento_nombre=MEDICA
 		medicamento_nombre=MEDICAMENTONUEVO,
 		medicamento_alias=ALIAS,
 		medicamento_stock=STOCK,
+		medicamento_fechf=FECHA,
 		medicamento_estatus=ESTATUS
 		WHERE medicamento_id=ID;
 		SELECT 1;
@@ -561,12 +571,12 @@ SELECT 2;
 END IF;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_REGISTRAR_MEDICAMENTO` (IN `MEDICAMENTO` VARCHAR(50), IN `ALIAS` VARCHAR(50), IN `STOCK` INT, IN `ESTATUS` VARCHAR(10))   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_REGISTRAR_MEDICAMENTO` (IN `MEDICAMENTO` VARCHAR(50), IN `ALIAS` VARCHAR(50), IN `STOCK` INT, IN `FECHA` DATE, IN `ESTATUS` VARCHAR(10))   BEGIN
 DECLARE CANTIDAD INT;
 SET @CANTIDAD:=(SELECT COUNT(*) FROM medicamento WHERE medicamento_nombre=MEDICAMENTO);
 IF @CANTIDAD=0 THEN
-	INSERT INTO medicamento(medicamento_nombre,medicamento_alias,medicamento_stock,medicamento_fregistro,medicamento_estatus)
-	VALUES(MEDICAMENTO,ALIAS,STOCK,CURDATE(),ESTATUS);
+	INSERT INTO medicamento(medicamento_nombre,medicamento_alias,medicamento_stock,medicamento_fregistro,medicamento_estatus,medicamento_fechf)
+	VALUES(MEDICAMENTO,ALIAS,STOCK,CURDATE(),ESTATUS,FECHA);
 	SELECT 1;
 ELSE
 	SELECT 2;
@@ -698,9 +708,17 @@ DELIMITER ;
 
 CREATE TABLE `auditoria` (
   `audi_id` int(11) NOT NULL,
-  `rol_id` int(11) DEFAULT NULL,
+  `fecha` date DEFAULT NULL,
+  `accion` varchar(100) COLLATE utf8_spanish_ci DEFAULT NULL,
   `usu_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci ROW_FORMAT=DYNAMIC;
+
+--
+-- Volcado de datos para la tabla `auditoria`
+--
+
+INSERT INTO `auditoria` (`audi_id`, `fecha`, `accion`, `usu_id`) VALUES
+(10, '2022-06-20', 'Se inserto un nuevo usuario', 0);
 
 -- --------------------------------------------------------
 
@@ -725,7 +743,7 @@ CREATE TABLE `cita` (
 --
 
 INSERT INTO `cita` (`cita_id`, `cita_nroatencion`, `cita_feregistro`, `medico_id`, `especialidad_id`, `paciente_id`, `cita_estatus`, `cita_descripcion`, `usu_id`) VALUES
-(1, 1, '2022-06-06', 1, 3, 1, 'CANCELADA', 'dfsdfsdfs', 5);
+(1, 1, '2022-06-20', 1, 3, 1, 'ATENDIDA', 'malestar', 5);
 
 -- --------------------------------------------------------
 
@@ -747,7 +765,8 @@ CREATE TABLE `consulta` (
 --
 
 INSERT INTO `consulta` (`consulta_id`, `consulta_descripcion`, `consulta_diagnostico`, `consulta_feregistro`, `consulta_estatus`, `cita_id`) VALUES
-(1, 'sdfsdffdf', 'ffdfdfgdf', '2022-06-06', 'ATENDIDA', 1);
+(1, 'vino por un malestar', 'se le dio descaso he ibuprofeno', '2022-06-19', 'ATENDIDA', 1),
+(2, 'dfdf', 'dfd', '2022-06-20', 'ATENDIDA', 1);
 
 -- --------------------------------------------------------
 
@@ -763,17 +782,10 @@ CREATE TABLE `detalle_insumo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci ROW_FORMAT=DYNAMIC;
 
 --
--- Volcado de datos para la tabla `detalle_insumo`
---
-
-INSERT INTO `detalle_insumo` (`detain_id`, `detain_cantidad`, `insumo_id`, `fua_id`) VALUES
-(1, 1, 3, 1);
-
---
 -- Disparadores `detalle_insumo`
 --
 DELIMITER $$
-CREATE TRIGGER `TR_STOCK_INSUMO` BEFORE INSERT ON `detalle_insumo` FOR EACH ROW BEGIN
+CREATE TRIGGER `TR_STOCK_INSUMO` AFTER INSERT ON `detalle_insumo` FOR EACH ROW BEGIN
 DECLARE STOCKACTUAL DECIMAL(10,2);
 SET @STOCKACTUAL:=(SELECT insumo_stock FROM insumo WHERE insumo_id=new.insumo_id);
 UPDATE insumo SET
@@ -798,16 +810,39 @@ CREATE TABLE `detalle_medicamento` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci ROW_FORMAT=DYNAMIC;
 
 --
+-- Volcado de datos para la tabla `detalle_medicamento`
+--
+
+INSERT INTO `detalle_medicamento` (`detame_id`, `detame_cantidad`, `medicamento_id`, `fua_id`) VALUES
+(1, 1, 5, 1),
+(2, 2, 3, 2),
+(3, 2, 1, 3),
+(4, 30, 7, 5);
+
+--
 -- Disparadores `detalle_medicamento`
 --
 DELIMITER $$
-CREATE TRIGGER `TR_STOCK_MEDICAMENTO` BEFORE INSERT ON `detalle_medicamento` FOR EACH ROW BEGIN
+CREATE TRIGGER `TR_SCTOK_MEDICAMENTO` AFTER INSERT ON `detalle_medicamento` FOR EACH ROW BEGIN
 DECLARE STOCKACTUAL DECIMAL(10,2);
 SET @STOCKACTUAL:=(SELECT medicamento_stock FROM medicamento WHERE medicamento_id=new.medicamento_id);
 UPDATE medicamento SET
 medicamento_stock=@STOCKACTUAL-new.detame_cantidad
 WHERE medicamento_id=new.medicamento_id;
 
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `TR_STATUS_MEDICAMENTO` AFTER INSERT ON `detalle_medicamento` FOR EACH ROW BEGIN
+DECLARE STOCKACTUAL INT;
+SET @STOCKACTUAL:=(SELECT medicamento_stock FROM medicamento WHERE medicamento_id=new.medicamento_id);
+	IF @STOCKACTUAL=0 THEN
+		UPDATE medicamento SET
+		medicamento_estatus='AGOTADO'
+		WHERE medicamento_id=new.medicamento_id;
+	END IF;
+	
 END
 $$
 DELIMITER ;
@@ -877,7 +912,11 @@ CREATE TABLE `fua` (
 --
 
 INSERT INTO `fua` (`fua_id`, `fua_fegistro`, `historia_id`, `consulta_id`) VALUES
-(1, '2022-06-06', 1, 1);
+(1, '2022-06-19', 1, 1),
+(2, '2022-06-19', 1, 1),
+(3, '2022-06-19', 1, 1),
+(4, '2022-06-20', 1, 2),
+(5, '2022-06-20', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -888,7 +927,7 @@ INSERT INTO `fua` (`fua_id`, `fua_fegistro`, `historia_id`, `consulta_id`) VALUE
 CREATE TABLE `historia` (
   `historia_id` int(11) NOT NULL,
   `paciente_id` int(11) DEFAULT NULL,
-  `historia_feregistro` datetime(6) DEFAULT NULL
+  `historia_feregistro` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci ROW_FORMAT=DYNAMIC;
 
 --
@@ -896,9 +935,7 @@ CREATE TABLE `historia` (
 --
 
 INSERT INTO `historia` (`historia_id`, `paciente_id`, `historia_feregistro`) VALUES
-(1, 1, '2022-06-04 00:00:00.000000'),
-(2, 2, '2022-06-06 00:00:00.000000'),
-(3, 3, '2022-06-06 00:00:00.000000');
+(1, 1, '2022-06-19');
 
 -- --------------------------------------------------------
 
@@ -921,15 +958,15 @@ CREATE TABLE `insumo` (
 
 INSERT INTO `insumo` (`insumo_id`, `insumo_nombre`, `insumo_stock`, `insumo_fregistro`, `insumo_estatus`, `insumo_fechf`) VALUES
 (1, 'GUANTES', 0, '2021-10-24', 'INACTIVO', '2022-06-09'),
-(2, 'JRINGAS', 0, '2021-10-24', 'AGOTADO', '2022-07-07'),
-(3, 'AGUJAS', 0, '2021-10-24', 'INACTIVO', NULL),
-(4, 'MASCARILLAS', 25, '2021-10-24', 'ACTIVO', NULL),
-(5, 'PINZAS', 12, '2021-10-24', 'ACTIVO', NULL),
-(6, 'ADHESIVOS', 10, '2021-10-24', 'INACTIVO', NULL),
-(11, 'VENDA', 15, '2021-10-25', 'ACTIVO', NULL),
-(12, 'Tapa Bocas', 2, '2022-03-27', 'ACTIVO', NULL),
-(13, 'GASAS', 10, '2022-03-27', 'ACTIVO', NULL),
-(14, 'Jeringa', 12, '2022-06-09', 'ACTIVO', '0000-00-00'),
+(2, 'JRINGAS', 0, '2021-10-24', 'INACTIVO', '2022-07-07'),
+(3, 'AGUJAS', 0, '2021-10-24', 'INACTIVO', '2022-06-09'),
+(4, 'MASCARILLAS', 23, '2021-10-24', 'ACTIVO', '2022-06-07'),
+(5, 'PINZAS', 12, '2021-10-24', 'ACTIVO', '2022-06-16'),
+(6, 'ADHESIVOS', 10, '2021-10-24', 'INACTIVO', '2022-06-09'),
+(11, 'VENDA', 15, '2021-10-25', 'ACTIVO', '2022-06-22'),
+(12, 'Tapa Bocas', 2, '2022-03-27', 'ACTIVO', '2022-06-08'),
+(13, 'GASAS', 10, '2022-03-27', 'ACTIVO', '2022-06-08'),
+(14, 'Jeringa', 12, '2022-06-09', 'ACTIVO', '2022-06-15'),
 (15, 'Jeringas', 23, '2022-06-09', 'ACTIVO', '2023-06-08');
 
 -- --------------------------------------------------------
@@ -953,12 +990,15 @@ CREATE TABLE `medicamento` (
 --
 
 INSERT INTO `medicamento` (`medicamento_id`, `medicamento_nombre`, `medicamento_alias`, `medicamento_stock`, `medicamento_fregistro`, `medicamento_estatus`, `medicamento_fechf`) VALUES
-(1, 'Loratadina', 'vera', 4, '2022-03-30', 'ACTIVO', NULL),
-(2, 'somatostatina', 'soma', 2, '2022-03-30', 'INACTIVO', NULL),
-(3, 'paracetamol', 'para', 0, '2022-03-30', 'AGOTADO', NULL),
-(4, 'verapamilloo', 've', 12, '2022-04-01', 'ACTIVO', NULL),
-(5, 'ibuprofeno', 'ibu', 10, '2022-04-01', 'ACTIVO', NULL),
-(6, 'acetaminofen', 'ace', 1, '2022-04-01', 'ACTIVO', NULL);
+(1, 'Loratadina', 'vera', 0, '2022-03-30', 'INACTIVO', '2022-06-09'),
+(2, 'somatostatina', 'soma', 0, '2022-03-30', 'INACTIVO', '2022-06-29'),
+(3, 'paracetamol', 'para', 0, '2022-03-30', 'ACTIVO', '2022-06-29'),
+(4, 'verapamilloo', 've', 0, '2022-04-01', 'ACTIVO', '2022-06-29'),
+(5, 'ibuprofeno', 'ibu', 0, '2022-04-01', 'ACTIVO', '2022-06-30'),
+(6, 'acetaminofen', 'ace', 0, '2022-04-01', 'ACTIVO', '2022-06-28'),
+(7, 'esomepraxol', 'eso', 0, '2022-06-10', 'ACTIVO', '2022-06-28'),
+(8, 'losatan', 'lo', 0, '2022-06-10', 'ACTIVO', '2022-06-17'),
+(9, 'valtasa', 'val', 0, '2022-06-10', 'ACTIVO', '2022-06-09');
 
 -- --------------------------------------------------------
 
@@ -1015,9 +1055,7 @@ CREATE TABLE `paciente` (
 --
 
 INSERT INTO `paciente` (`paciente_id`, `paciente_nombre`, `paciente_apepat`, `paciente_apemat`, `paciente_direccion`, `paciente_movil`, `paciente_sexo`, `paciente_fenac`, `paciente_nrodocumento`, `paciente_estatus`, `sag_id`) VALUES
-(1, 'betani', 'Contreras', 'Valero', 'Las Flores', '04162204090', 'M', '2022-06-07', '10749525', 'ACTIVO', 3),
-(2, 'Ceila', 'Contreras', 'Valero', 'Las Flores', '04162204090', 'F', '2000-06-07', '14348333', 'ACTIVO', 1),
-(3, 'Betania', 'Guerrero', 'Contreras', 'Las Flores', '04246338650', 'F', '2022-06-07', '27962767', 'ACTIVO', 7);
+(1, 'Andrew', 'Contreras', 'Valero', 'Las flores', '04246338650', 'M', '1998-05-15', '26309450', 'ACTIVO', 2);
 
 --
 -- Disparadores `paciente`
@@ -1138,7 +1176,28 @@ CREATE TABLE `usuario` (
 INSERT INTO `usuario` (`usu_id`, `usu_nombre`, `usu_contrasena`, `usu_sexo`, `rol_id`, `usu_estatus`, `usu_email`, `usu_intento`) VALUES
 (5, 'vero', '$2y$10$GU9cYfZJT/Z9Twm8EA8VBu/eS8PFTx5Rn5g5ml9YE5cFjlCo3rfOa', 'F', 1, 'ACTIVO', '', 1),
 (45, 'andrew', '$2y$10$.82mx3k7avhJ32yZiMqwOeKfevfMwpy1dmj4v4aBYSRHoVNRCNbZq', 'M', 3, 'ACTIVO', 'andrew.contrera2012@gmail.com', 0),
-(46, 'nestor', '$2y$10$daE2a1NjU5jgPK.QgS58g.aPZTajqVx6O/5WI9vvmr5PfMEXLrWNG', 'M', 3, 'ACTIVO', 'nestor.contrera2022@gmail.com', 0);
+(46, 'nestor', '$2y$10$daE2a1NjU5jgPK.QgS58g.aPZTajqVx6O/5WI9vvmr5PfMEXLrWNG', 'F', 3, 'ACTIVO', 'nestor.contrera2022@gmail.com', 0),
+(47, 'betania', '123', 'M', 3, 'ACTIVO', 'betania.contrera2012@gmail.com', 0),
+(48, 'betzaida', '$2y$10$9SS1Ksy.nH2VqX5jnj0xFu.DzBtL205To/VjXATCWkhVjQUcVnyRu', 'M', 2, 'ACTIVO', 'betzaida.contrera2012@gmail.com', 0);
+
+--
+-- Disparadores `usuario`
+--
+DELIMITER $$
+CREATE TRIGGER `TRIGGER_INSERT_USUARIO` AFTER INSERT ON `usuario` FOR EACH ROW INSERT INTO auditoria(usu_id,fecha,accion)
+VALUES (CURRENT_USER(),NOW(),"Se inserto un nuevo usuario")
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `TR_DELETE_USUARIO` AFTER INSERT ON `usuario` FOR EACH ROW INSERT INTO auditoria(usuario,fecha,accion)
+VALUES (CURRENT_USER(),NOW(),"Se ha eliminado un nuevo usuario")
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `TR_UPDATE_USUARIO` AFTER UPDATE ON `usuario` FOR EACH ROW INSERT INTO auditoria(usu_id,fecha,accion)
+VALUES (CURRENT_USER(),NOW(),"Se inserto un nuevo usuario")
+$$
+DELIMITER ;
 
 --
 -- Índices para tablas volcadas
@@ -1148,7 +1207,8 @@ INSERT INTO `usuario` (`usu_id`, `usu_nombre`, `usu_contrasena`, `usu_sexo`, `ro
 -- Indices de la tabla `auditoria`
 --
 ALTER TABLE `auditoria`
-  ADD PRIMARY KEY (`audi_id`) USING BTREE;
+  ADD PRIMARY KEY (`audi_id`) USING BTREE,
+  ADD KEY `usu_id` (`usu_id`);
 
 --
 -- Indices de la tabla `cita`
@@ -1286,7 +1346,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `auditoria`
 --
 ALTER TABLE `auditoria`
-  MODIFY `audi_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `audi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `cita`
@@ -1298,19 +1358,19 @@ ALTER TABLE `cita`
 -- AUTO_INCREMENT de la tabla `consulta`
 --
 ALTER TABLE `consulta`
-  MODIFY `consulta_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `consulta_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_insumo`
 --
 ALTER TABLE `detalle_insumo`
-  MODIFY `detain_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `detain_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_medicamento`
 --
 ALTER TABLE `detalle_medicamento`
-  MODIFY `detame_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `detame_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_procedimiento`
@@ -1334,13 +1394,13 @@ ALTER TABLE `especialidad`
 -- AUTO_INCREMENT de la tabla `fua`
 --
 ALTER TABLE `fua`
-  MODIFY `fua_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `fua_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `historia`
 --
 ALTER TABLE `historia`
-  MODIFY `historia_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `historia_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `insumo`
@@ -1352,7 +1412,7 @@ ALTER TABLE `insumo`
 -- AUTO_INCREMENT de la tabla `medicamento`
 --
 ALTER TABLE `medicamento`
-  MODIFY `medicamento_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `medicamento_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `medico`
@@ -1364,7 +1424,7 @@ ALTER TABLE `medico`
 -- AUTO_INCREMENT de la tabla `paciente`
 --
 ALTER TABLE `paciente`
-  MODIFY `paciente_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `paciente_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `procedimiento`
@@ -1388,7 +1448,7 @@ ALTER TABLE `sangre`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `usu_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `usu_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- Restricciones para tablas volcadas
