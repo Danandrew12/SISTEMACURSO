@@ -24,6 +24,9 @@
   <link rel="stylesheet" href="../Plantilla/dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
 folder instead of downloading all of them to reduce the load. -->
+
+<link rel="stylesheet" href="../Plantilla/dist/css/admin.css">
+
   <link rel="stylesheet" href="../Plantilla/dist/css/skins/_all-skins.min.css">
   <!-- Morris chart -->
   <link rel="stylesheet" href="../Plantilla/bower_components/morris.js/morris.css">
@@ -135,7 +138,7 @@ folder instead of downloading all of them to reduce the load. -->
         </div>
         <div class="pull-left info">
           <p><?php echo $_SESSION['S_USER']; ?></p>
-          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+          <a href="#"><i class="fa fa-circle text-success"></i> En Linea</a>
         </div>
       </div>
       <!-- search form -->
@@ -157,92 +160,91 @@ folder instead of downloading all of them to reduce the load. -->
           if($_SESSION['S_ROL']=='ADMINISTRADOR'){
  
         ?>
-              <!--ususario-->
+        <!--ususario-->
         <header style="text-align:center">
           <a href="dashboard/vista_dashboard_listar.php" class="logo">
             <i class="fa fa-github-alt"></i> <span class="logo-lg">INICIO</span>
           </a>
-          </header>
-          <a onclick="cargar_contenido('contenido_principal','paciente/vista_paciente_listar.php')">
-            <i class="fa fa-user"></i> <span>Paciente</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <a onclick="cargar_contenido('contenido_principal','cita/vista_cita_listar.php')">
-            <i class="fa fa-user-md"></i> <span>Cita</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <a onclick="cargar_contenido('contenido_principal','consulta_medica/vista_consulta_listar.php')">
-            <i class="fa fa-stethoscope"></i> <span>Consulta Medica</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
+        </header>
+        <a onclick="cargar_contenido('contenido_principal','paciente/vista_paciente_listar.php')">
+          <i class="fa fa-user"></i> <span>Paciente</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <a onclick="cargar_contenido('contenido_principal','cita/vista_cita_listar.php')">
+          <i class="fa fa-user-md"></i> <span>Cita</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <a onclick="cargar_contenido('contenido_principal','consulta_medica/vista_consulta_listar.php')">
+          <i class="fa fa-stethoscope"></i> <span>Consulta Medica</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
           
-          <a onclick="cargar_contenido('contenido_principal','medico/vista_medico_listar.php')">
-            <i class="fa fa-user-md"></i> <span>Médico</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <a onclick="cargar_contenido('contenido_principal','usuario/vista_usuario_listar.php')">
-            <i class="fa fa-users"></i> <span>Usuario</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-              <!--Procedimientos-->
-          <a onclick="cargar_contenido('contenido_principal','procedimiento/vista_procedimiento_listar.php')">
-            <i class="fa fa-hourglass-3"></i> <span>Procedimientos</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-        
-          <a onclick="cargar_contenido('contenido_principal','insumo/vista_insumo_listar.php')">
-            <i class="fa fa-cubes"></i> <span>Insumo</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <a onclick="cargar_contenido('contenido_principal','medicamento/vista_medicamento_listar.php')">
-            <i class="fa fa-medkit"></i> <span>Medicamento</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <a onclick="cargar_contenido('contenido_principal','especialidad/vista_especialidad_listar.php')">
-            <i class="fa fa-gg"></i> <span>Especialidad</span>
-            <span class="pull-right-container"> 
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a><a onclick="cargar_contenido('contenido_principal','historial/vista_historial_listar.php')">
-            <i class="fa fa-file-text-o"></i> <span>Historial Médico</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          </a><a onclick="cargar_contenido('contenido_principal','restaurar/vista_restaurar_listar.php')">
-            <i class="fa fa-history"></i> <span>Restaurar</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          </a><a onclick="cargar_contenido('contenido_principal','auditoria/vista_auditoria_listar.php')">
-            <i class="fa fa-television"></i> <span>Auditoria</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          </a><a onclick="cargar_contenido('contenido_principal','donaciones/vista_donaciones_listar.php')">
-            <i class="fa fa-plus-square"></i> <span>Donaciones</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
+        <a onclick="cargar_contenido('contenido_principal','medico/vista_medico_listar.php')">
+          <i class="fa fa-user-md"></i> <span>Médico</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <a onclick="cargar_contenido('contenido_principal','usuario/vista_usuario_listar.php')">
+          <i class="fa fa-users"></i> <span>Usuario</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <a onclick="cargar_contenido('contenido_principal','procedimiento/vista_procedimiento_listar.php')">
+          <i class="fa fa-hourglass-3"></i> <span>Procedimientos</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <a onclick="cargar_contenido('contenido_principal','insumo/vista_insumo_listar.php')">
+          <i class="fa fa-cubes"></i> <span>Insumo</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <a onclick="cargar_contenido('contenido_principal','medicamento/vista_medicamento_listar.php')">
+          <i class="fa fa-medkit"></i> <span>Medicamento</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <a onclick="cargar_contenido('contenido_principal','especialidad/vista_especialidad_listar.php')">
+          <i class="fa fa-gg"></i> <span>Especialidad</span>
+          <span class="pull-right-container"> 
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <a onclick="cargar_contenido('contenido_principal','historial/vista_historial_listar.php')">
+          <i class="fa fa-file-text-o"></i> <span>Historial Médico</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <a onclick="cargar_contenido('contenido_principal','restaurar/vista_restaurar_listar.php')">
+          <i class="fa fa-history"></i> <span>Restaurar</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <a onclick="cargar_contenido('contenido_principal','auditoria/vista_auditoria_listar.php')">
+          <i class="fa fa-television"></i> <span>Auditoria</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <a onclick="cargar_contenido('contenido_principal','donaciones/vista_donaciones_listar.php')">
+          <i class="fa fa-plus-square"></i> <span>Donaciones</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
 
         <?php
              }

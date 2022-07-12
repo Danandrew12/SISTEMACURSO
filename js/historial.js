@@ -122,8 +122,7 @@ function listar_historial_consulta(){
             {"data":"paciente"},
             {"defaultContent":"<button style='font-size:13px;' type='button' class='enviar btn btn-success' title='Enviar'><i class='fa fa-sign-in'></i>&nbsp; Enviar</button>"},
 
-       
-	],
+		],
 
 	"language":idioma_espanol,
 	select: true
@@ -376,6 +375,9 @@ function remove_Medicamento(t){
 	table.removeChild(tr);
 }
 
+
+/////////////////////////////////////////////////////////////////
+
 function Registrar_Historial(){
 	 var idhistorial =$("#txt_codigohistorial").val();
 	 var idconsulta=$("#txt_idconsulta").val();
@@ -485,6 +487,8 @@ function registrar_detalle_insumo(id){
 	})
 
 }
+
+////////////////////////////////////////////////////////////////
 
 var tableprocedimiento;
 function listar_procedimiento_detalle(idfua){
