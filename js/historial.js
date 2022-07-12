@@ -33,7 +33,6 @@ function listar_historial(){
 			}
 		},
 
-       
 	],
 
 	"language":idioma_espanol,
@@ -517,6 +516,15 @@ function listar_procedimiento_detalle(idfua){
 	"language":idioma_espanol,
 	select: true
 
+	});
+
+	document.getElementById("tabla_procedimiento_filter").style.display="none";
+
+	$('input.global_filter').on( 'keyup click', function () {
+		filterGlobal();
+	});
+	$('input.column_filter').on( 'keyup click', function () {
+		filterColumn( $(this).parents('tr').attr('data-column') );
 	});
 
 	tableprocedimiento.on('draw.dt', function (){

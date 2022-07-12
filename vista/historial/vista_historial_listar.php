@@ -1,185 +1,69 @@
 <script type="text/javascript" src="../js/historial.js?rev=<?php echo time();?>"></script>
 <form autocomplete="false" onsubmit="return false">
-<div class="col-md-12">
-      <div class="box box-warning box-solid">
-          <div class="box-header with-border">
-              <h3 class="box-title">Mantenimiento De Historial Médico</h3>
-
-            <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-            </div>
+  <div class="col-md-12">
+    <div class="box box-warning box-solid">
+      <div class="box-header with-border">
+        <h3 class="box-title">Mantenimiento De Historial Médico</h3>
+        <div class="box-tools pull-right">
+          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+          </button>
+        </div>
               <!-- /.box-tools -->
         </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-              <div class="form-group">
-                    <div class="col-lg-4">
-                      <label for="">Fecha Inicio</label>
-                      <input type="date" id="txt_fechainicio" class="form-control">
-                    </div>
-                    <div class="col-lg-4">
-                      <label for="">Fecha Fin</label>
-                      <input type="date" id="txt_fechafin" class="form-control">
-                    </div>
-                   <div class="col-lg-2">
-                      <label for="">&nbsp;</label><br>
-                      <button class="btn btn-success" style="width:100%" onclick="listar_historial()"><i class="glyphicon glyphicon-search"></i>Buscar</button>
-                   </div>
-                  <div class="col-lg-2">
-                      <label for="">&nbsp;</label><br>
-                      <button class="btn btn-danger" style="width:100%" onclick="cargar_contenido('contenido_principal','historial/vista_historial_registrar.php')"><i class="glyphicon glyphicon-plus"></i>Nuevo Registro</button>
-                  </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            <div class="form-group">
+              <div class="col-lg-4">
+                <label for="">Fecha Inicio</label>
+                <input type="date" id="txt_fechainicio" class="form-control">
               </div>
-
+              <div class="col-lg-4">
+                <label for="">Fecha Fin</label>
+                <input type="date" id="txt_fechafin" class="form-control">
+              </div>
+              <div class="col-lg-2">
+                <label for="">&nbsp;</label><br>
+                <button class="btn btn-success" style="width:100%" onclick="listar_historial()"><i class="glyphicon glyphicon-search"></i>Buscar</button>
+              </div>
+              <div class="col-lg-2">
+                <label for="">&nbsp;</label><br>
+                <button class="btn btn-danger" style="width:100%" onclick="cargar_contenido('contenido_principal','historial/vista_historial_registrar.php')"><i class="glyphicon glyphicon-plus"></i>Nuevo Registro</button>
+              </div>
+            </div>
             <div class="col-lg-12 table-responsive">
               <table id="tabla_historial" class="display responsive nowrap" style="width:100%">
                 <thead>
                   <tfoot>
-                  <tr>
-                    <th>#</th>
-                    <th>Fecha</th>
-                    <th>Nro Documento</th>
-                    <th>Paciente</th>
-                    <th>Diagnostico</th>
-                    <th>Ver Detalle del Fua</th>
-                    <th>Reportes</th>
-                  </tr>
+                    <tr>
+                      <th>#</th>
+                      <th>Fecha</th>
+                      <th>Nro Documento</th>
+                      <th>Paciente</th>
+                      <th>Diagnostico</th>
+                      <th>Ver Detalle del Fua</th>
+                      <th>Reportes</th>
+                    </tr>
                   </tfoot>
                 </thead>
                 <tfoot>
                   <tr>
-                  <th>#</th>
-                    <th>Fecha</th>
-                    <th>Nro Documento</th>
-                    <th>Paciente</th>
-                    <th>Diagnostico</th>
-                    <th>Ver Detalle del Fua</th>
-                    <th>Reportes</th>
+                    <th>#</th>
+                      <th>Fecha</th>
+                      <th>Nro Documento</th>
+                      <th>Paciente</th>
+                      <th>Diagnostico</th>
+                      <th>Ver Detalle del Fua</th>
+                      <th>Reportes</th>
                   </tr>
                 </tfoot>
               </table>
-              </div>
             </div>
-            <!-- /.box-body -->
+          </div>
+              <!-- /.box-body -->
     </div>
-          <!-- /.box -->
-</div>
+            <!-- /.box -->
+  </div>
 </form>
-
-                        <!-- /.box --<div class="col-md-12"><br>
-                                  <div class="row">
-                                    <div class="col-12">
-                                      <div class="card">
-                                        <div class="card-header d-flex p-0">
-                                          <h3 class="card-title p-3">Tabs</h3>
-                                          <ul class="nav nav-pills ml-auto p-2">
-                                            <li class="nav-item"><a class="nav-link active" href="#tab_1" data-toggle="tab">Procedimientos</a></li>
-                                            <li class="nav-item"><a class="nav-link" href="#tab_2" data-toggle="tab">Insumo</a></li>
-                                            <li class="nav-item"><a class="nav-link" href="#tab_3" data-toggle="tab">Medicamentos</a></li>
-                                          </ul>
-                                        </div>
-                                        <div class="card-body">
-                                          <div class="tab-content">
-                                            <div class="tab-pane active" id="tab_1">
-                                              <div class="row">
-                                                <div class="col-lg-10">
-                                                  <label for="">Procedimientos</label>
-                                                  <select class="js-example-basic-single" name="state" id="cbm_procedimiento" style="width: 100%;">
-                                                  </select>
-                                                </div>
-                                                <div class="col-lg-2">
-                                                  <label for="">&nbsp;</label><br>
-                                                  <button class="btn btn-primary" style="width: 100%;" onclick="Agregar_procedimiento()"><i class="fa fa-plu-square"></i>&nbsp;Agregar</button>
-                                                </div>
-                                                <div class="col-lg-12" table-responsive><br>
-                                                  <table id="tabla_procedimiento" style="width:100%" class="table">
-                                                    <thead>
-                                                      <th>ID</th>
-                                                      <th>Procedimientos</th>
-                                                      <th>Acción</th>
-                                                    </thead>
-                                                    <tbody id="tbody_tabla_procedimiento">
-                                                    </tbody>
-                                                  </table>
-                                                </div>
-                                              </div>
-                                            </div>
-                                            <div class="tab-pane" id="tab_2">
-                                              <div class="row">
-                                                <div class="col-lg-6">
-                                                  <label for="">Insumos</label>
-                                                  <select class="js-example-basic-single" name="state" id="cbm_insumo" style="width: 100%;">
-                                                  </select>
-                                                </div>
-                                                <div class="col-lg-2">
-                                                  <label for="">Stock Actual</label>
-                                                  <input type="text" class="form-control" id="stock_insumo" disabled>
-                                                </div>
-                                                <div class="col-lg-2">
-                                                  <label for="">Cantidad Agregar</label>
-                                                  <input type="text" class="form-control" id="txt_cantidad_agregar">
-                                                </div>
-                                                <div class="col-lg-2">
-                                                  <label for="">&nbsp;</label><br>
-                                                  <button class="btn btn-primary" style="width: 100%;" onclick="Agregar_Insumo()"><i class="fa fa-plu-square"></i>&nbsp;Agregar</button>
-                                                </div>
-                                                <div class="col-lg-12" table-responsive><br>
-                                                  <table id="tabla_insumo" style="width:100%" class="table">
-                                                    <thead>
-                                                      <th>ID</th>
-                                                      <th>Insumo</th>
-                                                      <th>Cantidad</th>
-                                                      <th>Acción</th>
-                                                    </thead>
-                                                    <tbody id="tbody_tabla_insumo">
-                                                    </tbody>
-                                                  </table>
-                                                </div>
-                                              </div>
-                                            </div>
-                                            <div class="tab-pane" id="tab_3">
-                                              <div class="row">
-                                                <div class="col-lg-6">
-                                                  <label for="">Medicamentos</label>
-                                                  <select class="js-example-basic-single" name="state" id="cbm_medicamento" style="width: 100%;">
-                                                  </select>
-                                                </div>
-                                                <div class="col-lg-2">
-                                                  <label for="">Stock Actual</label>
-                                                  <input type="text" class="form-control" id="stock_medicamento" disabled>
-                                                </div>
-                                                <div class="col-lg-2">
-                                                  <label for="">Cantidad Agregar</label>
-                                                  <input type="text" class="form-control" id="txt_cantidad_agregar_medicamento">
-                                                </div>
-                                                <div class="col-lg-2">
-                                                  <label for="">&nbsp;</label><br>
-                                                  <button class="btn btn-primary" style="width: 100%;" onclick="Agregar_Medicamento()"><i class="fa fa-plu-square"></i>&nbsp;Agregar
-                                                  </button>
-                                                </div>
-                                                <div class="col-lg-12" table-responsive><br>
-                                                  <table id="tabla_medicamento" style="width:100%" class="table">
-                                                    <thead>
-                                                      <th>ID</th>
-                                                      <th>Medicamento</th>
-                                                      <th>Cantidad</th>
-                                                      <th>Acción</th>
-                                                    </thead>
-                                                    <tbody id="tbody_tabla_medicamento">
-                                                    </tbody>
-                                                  </table>
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                        </div>-->
-
-
 
 <div class="modal lg" id="modal_detalle" role="dialog">
   <div class="modal-dialog modal-lg">
