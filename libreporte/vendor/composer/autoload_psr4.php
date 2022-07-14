@@ -7,8 +7,10 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'setasign\\Fpdi\\' => array($vendorDir . '/setasign/fpdi/src'),
+    'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/src'),
     'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-message/src'),
+    'Mpdf\\QrCode\\' => array($vendorDir . '/mpdf/qrcode/src'),
     'Mpdf\\' => array($vendorDir . '/mpdf/mpdf/src'),
     'Http\\Message\\' => array($vendorDir . '/php-http/message-factory/src'),
     'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),

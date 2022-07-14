@@ -1,0 +1,57 @@
+{
+
+	"name": "mpdf/qrcode",
+	"type": "library",
+
+	"description": "QR code generator for mPDF",
+
+	"keywords": ["php", "pdf", "mpdf", "qr", "qrcode"],
+
+	"license": "LGPL-2.1-or-later",
+
+	"authors": [
+		{
+			"name": "Matěj Humpál",
+			"role": "maintainer"
+		},
+		{
+			"name": "Laurent Minguet",
+			"role": "author"
+		}
+	],
+
+	"require": {
+		"php": "^5.6 || ^7.0 || ^8.0",
+		"paragonie/random_compat": "^1.4|^2.0|^9.99.99"
+	},
+
+	"require-dev": {
+		"yoast/phpunit-polyfills": "^1.0",
+		"mockery/mockery": "^0.9.5",
+		"squizlabs/php_codesniffer": "^3.4",
+		"tracy/tracy": "^2.5"
+	},
+
+	"scripts": {
+		"cs": "@php vendor/bin/phpcs -v --report-width=160 --standard=ruleset.xml --severity=1 --warning-severity=0 --extensions=php src tests",
+		"test": "@php vendor/bin/phpunit",
+		"coverage": "@php vendor/bin/phpunit --coverage-text"
+	},
+
+	"suggest": {
+		"ext-gd": "To output QR codes to PNG files",
+		"ext-simplexml": "To output QR codes to SVG files"
+	},
+
+	"autoload": {
+
+		"psr-4": {
+			"Mpdf\\QrCode\\": "src/"
+		}
+
+	},
+
+	"autoload-dev": {
+		"files": [ "tests/functions.php" ]
+	}
+}

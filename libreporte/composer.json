@@ -1,5 +1,10 @@
 {
     "require": {
-        "mpdf/mpdf": "^8.1"
+        "mpdf/mpdf": "^8.1",
+        "ext-gd": "*",
+        "symfony/polyfill-mbstring": "^1.26",
+        "mockery/mockery": "^1.5",
+        "mpdf/qrcode": "^1.2",
+        "myclabs/deep-copy": "^1.11"
     }
 }

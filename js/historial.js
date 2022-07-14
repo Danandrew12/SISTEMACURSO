@@ -566,6 +566,16 @@ function listar_insumo_detalle(idfua){
 
 	});
 
+
+	document.getElementById("tabla_insumo_filter").style.display="none";
+
+	$('input.global_filter').on( 'keyup click', function () {
+		filterGlobal();
+	});
+	$('input.column_filter').on( 'keyup click', function () {
+		filterColumn( $(this).parents('tr').attr('data-column') );
+	});
+
 	tableinsuno.on('draw.dt', function (){
 		var PageInfo = $('#tabla_insumo').DataTable().page.info();
 		tableinsuno.column(0, { page: 'current' }).nodes().each( function (cell, i){
@@ -603,6 +613,15 @@ function listar_medicamento_detalle(idfua){
 	"language":idioma_espanol,
 	select: true
 
+	});
+
+	document.getElementById("tabla_medicamento_filter").style.display="none";
+
+	$('input.global_filter').on( 'keyup click', function () {
+		filterGlobal();
+	});
+	$('input.column_filter').on( 'keyup click', function () {
+		filterColumn( $(this).parents('tr').attr('data-column') );
 	});
 
 	tablemedicamento.on('draw.dt', function (){
