@@ -50,7 +50,7 @@ folder instead of downloading all of them to reduce the load. -->
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-</head>
+</head> 
 <style>
   .Swal2-popup{
     font-size: 1.6rem !important;
@@ -158,7 +158,7 @@ folder instead of downloading all of them to reduce the load. -->
         <li class="active treeview">
         <?php
           if($_SESSION['S_ROL']=='ADMINISTRADOR'){
- 
+
         ?>
         <!--ususario-->
         <header style="text-align:center">
@@ -247,12 +247,12 @@ folder instead of downloading all of them to reduce the load. -->
         </a>
 
         <?php
-             }
+          }
         ?>
 
         <?php
         if($_SESSION['S_ROL']=='RECEPCIONISTA'){
- 
+
         ?>
         <!-- /. CONTENIDO QUE VERA EL USUARIO SEGUN EL ROL -->
         <a onclick="cargar_contenido('contenido_principal','cita/vista_cita_listar.php')">
@@ -267,7 +267,7 @@ folder instead of downloading all of them to reduce the load. -->
 
         <?php
           if($_SESSION['S_ROL']=='MEDICO'){
- 
+
         ?>
         <!-- /. CONTENIDO QUE VERA EL USUARIO SEGUN EL ROL -->
         <a onclick="cargar_contenido('contenido_principal','paciente/vista_paciente_listar.php')">

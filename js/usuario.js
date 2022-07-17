@@ -151,7 +151,7 @@ $('#tabla_usuario').on('click','.desactivar',function(){
 		confirmButtonColor: '#3085d6',
 		cancelButtonColor: '#d33',
 		confirmButtonText: 'Si'
-	  }).then((result) => {
+	}).then((result) => {
 		if (result.value) {
 			Modificar_Estatus(data.usu_id,'INATIVO')
 		}
@@ -171,7 +171,7 @@ $('#tabla_usuario').on('click','.activar',function(){
 		confirmButtonColor: '#3085d6',
 		cancelButtonColor: '#d33',
 		confirmButtonText: 'Si'
-	  }).then((result) => {
+	}).then((result) => {
 		if (result.value) {
 			Modificar_Estatus(data.usu_id,'ACTIVO')
 		}
@@ -293,7 +293,7 @@ function Registrar_Usuario(){
 					table.ajax.reload();
 				});
 			}else{
-				 return Swal.fire("Mensaje de avertencia" , "Lo sentimos, el nombre del usuario ya se encuentra en nuestra base de datos" , "warning");
+				return Swal.fire("Mensaje de avertencia" , "Lo sentimos, el nombre del usuario ya se encuentra en nuestra base de datos" , "warning");
 			}
 		}else{
 			Swal.fire("Mensaje De Error","Lo sentimos, no se pudo completar el registro","error");
@@ -360,15 +360,15 @@ function TraerDatosUsuario(){
 		var data = JSON.parse(resp);
 		if(data.length>0){
 			$("#txtcontra_bd").val(data[0][2]);
-			 if(data[0][3]==="M"){
+			if(data[0][3]==="M"){
 			 	$("#img_nav").attr("src","../Plantilla/dist/img/avatar5.PNG");
 			 	$("#img_subnav").attr("src","../Plantilla/dist/img/avatar5.PNG");
 			 	$("#img_lateral").attr("src","../Plantilla/dist/img/avatar5.PNG");
-			 }else{
+			}else{
 			 	$("#img_nav").attr("src","../Plantilla/dist/img/avatar3.png");
 			 	$("#img_subnav").attr("src","../Plantilla/dist/img/avatar3.png");
 			 	$("#img_lateral").attr("src","../Plantilla/dist/img/avatar3.png");
-			 }
+			}
 		}
 	})
 }
@@ -377,8 +377,8 @@ function AbrirModalEditarContra(){
 	$("#modal_editar_contra").modal({backdrop: 'static',keyboard:false})
 	$("#modal_editar_contra").modal('show');
 	$("#modal_editar_contra").on('shown.bs.modal',function(){
-      $("#txtcontraactual_editar").focus();
-  })
+    $("#txtcontraactual_editar").focus();
+    })
 
 }
 
@@ -436,7 +436,7 @@ function AbrirModalRestablecer(){
 	$("#modal_restablecer_contra").modal({backdrop: 'static',keyboard:false})
 	$("#modal_restablecer_contra").modal('show');
 	$("#modal_restablecer_contra").on('shown.bs.modal',function(){
-      $("#txt_email").focus();
+    $("#txt_email").focus();
 	})
 
 }
